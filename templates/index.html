@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Plateforme pédagogique</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Plateforme pédagogique</h1>
+        <p>Apprenez, progressez et gérez vos cours en toute simplicité.</p>
+        <nav>
+            <a href="/connexion">Connexion</a>
+            <a href="/inscription">Créer un compte</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Bienvenue</h2>
+            <p>Cette plateforme vous permet de découvrir des ressources, de suivre vos formations et de gérer votre profil.</p>
+        </section>
+
+        <section>
+            <h3>Ce que nous décidons de vous offrir à travers notre plateforme</h3>
+            <ul>
+                <li>Accès à des cours, exercices et ressources pédagogiques</li>
+                <li>Créer et gérer votre compte</li>
+                <li> Vous avez un Profil utilisateur personnalisé</li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>

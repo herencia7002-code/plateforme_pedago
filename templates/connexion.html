@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'connexion.css' %}">
+</head>
+<body>
+    <div class="form-card">
+        <h1>Connexion</h1>
+        <p class="sub">Connectez-vous et accédez à votre espace personnel</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label for="id_email">Adresse e-mail</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
+            <div class="field">
+                <label for="id_password">Mot de passe</label>
+                {{ form.password }}
+                {{ form.password.errors }}
+            </div>
+
+            <button type="submit" class="submit">Se connecter</button>
+        </form>
+
+        <div class="auth-footer">
+            Pas de compte ? <a href="{% url 'inscription' %}">S'inscrire</a>
+        </div>
+    </div>
+</body>
+</html>

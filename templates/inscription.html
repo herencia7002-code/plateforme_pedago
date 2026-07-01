@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un compte</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'inscription.css' %}">
+</head>
+<body>
+    <div class="form-card">
+        <h1>Créer votre compte</h1>
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="field">
+                <label for="id_username">Nom d'utilisateur</label>
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+
+            <div class="field">
+                <label for="id_email">Email</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
+            <div class="field">
+                <label for="id_password1">Mot de passe</label>
+                {{ form.password1 }}
+                {{ form.password1.errors }}
+            </div>
+
+            <div class="field">
+                <label for="id_password2">Confirmer le mot de passe</label>
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+            </div>
+
+            <button type="submit">S'inscrire</button>
+        </form>
+    </div>
+</body>
+</html>

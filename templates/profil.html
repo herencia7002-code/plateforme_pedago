@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon profil - Plateforme pédagogique</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <link rel="stylesheet" href="{% static 'profil.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="/">Plateforme pédagogique</a>
+        <nav class="site-nav">
+            <a href="/">Accueil</a>
+            <a href="{% url 'connexion' %}">Connexion</a>
+            <a href="{% url 'inscription' %}">Inscription</a>
+        </nav>
+    </header>
+
+    <main class="site-main">
+        <div class="profile-container">
+            <!-- Sidebar -->
+            <aside class="profile-sidebar">
+                <div class="user-card">
+                    <div class="user-avatar">{{ user.username|first|upper }}</div>
+                    <h2>{{ user.username }}</h2>
+                    <p class="user-role">
+                        {% if user.is_superuser %}
+                            Administrateur
+                        {% elif user.is_staff %}
+                            Enseignant
+                        {% else %}
+                            Étudiant
+                        {% endif %}
+                    </p>
+                </div>
+
+                <nav class="profile-nav">
+                    <a href="#informations" class="nav-link active">Informations</a>
+                    <a href="#activite" class="nav-link">Activité</a>
+                    <a href="#parametres" class="nav-link">Paramètres</a>
+                    <a href="/" class="nav-link">Retour à l'accueil</a>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <section class="profile-content">
+        <!-- Section Informations -->
+        <section id="informations" class="content-section">
+            <div class="section-header">
+                <h1>Profil personnel</h1>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-label">Nom d'utilisateur</div>
+                    <div class="info-value">{{ user.username }}</div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">{{ user.email|default:"Non renseigné" }}</div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-label">Membre depuis</div>
+                    <div class="info-value">{{ user.date_joined|date:"d/m/Y" }}</div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-label">Type de compte</div>
+                    <div class="info-value">
+                        {% if user.is_superuser %}
+                            Administrateur
+                        {% elif user.is_staff %}
+                            Enseignant
+                        {% else %}
+                            Étudiant
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Accès -->
+        <section class="content-section access-section">
+            <div class="section-header">
+                <h2>Mes accès</h2>
+            </div>
+
+            <div class="access-box">
+                {% if user.is_superuser %}
+                    <div class="access-item">
+                        <div class="access-icon">⚙️</div>
+                        <div>
+                            <h3>Administration complète</h3>
+                            <p>Gestion des utilisateurs, des cours, des paramètres et des rapports</p>
+                        </div>
+                    </div>
+                {% elif user.is_staff %}
+                    <div class="access-item">
+                        <div class="access-icon">📚</div>
+                        <div>
+                            <h3>Créer et gérer des cours</h3>
+                            <p>Créer, modifier et supprimer des formations</p>
+                        </div>
+                    </div>
+                    <div class="access-item">
+                        <div class="access-icon">👥</div>
+                        <div>
+                            <h3>Suivre les élèves</h3>
+                            <p>Consulter la progression de vos étudiants</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="access-item">
+                        <div class="access-icon">📖</div>
+                        <div>
+                            <h3>Accès aux cours</h3>
+                            <p>Consultez tous les cours disponibles sur la plateforme</p>
+                        </div>
+                    </div>
+                    <div class="access-item">
+                        <div class="access-icon">📊</div>
+                        <div>
+                            <h3>Suivi de progression</h3>
+                            <p>Visualisez votre avancement dans les formations</p>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- Section Actions -->
+        <section class="content-section actions-section">
+            <div class="section-header">
+                <h2>Actions rapides</h2>
+            </div>
+
+            <div class="actions-grid">
+                {% if not user.is_staff %}
+                    <a href="/cours" class="action-btn primary">
+                        <span class="btn-icon"></span>
+                        <span>Explorer les cours</span>
+                    </a>
+                {% else %}
+                    <a href="/creer-cours" class="action-btn primary">
+                    
+                        <span>Créer un cours</span>
+                    </a>
+                {% endif %}
+
+                <a href="/editer-profil" class="action-btn secondary">
+                    
+                    <span>Modifier mon profil</span>
+                </a>
+
+                {% if user.is_superuser %}
+                    <a href="/admin" class="action-btn secondary">
+                        <span>Panel d'administration</span>
+                    </a>
+                {% endif %}
+            </div>
+        </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2026 Plateforme pédagogique</p>
+    </footer>
+</body>
+</html>
