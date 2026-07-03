@@ -38,10 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'accounts',
     'users',
     'resources',
     'categories',
     'ratings',
+    'dashboard',
+    
 ]
 
 MIDDLEWARE = [
@@ -83,8 +86,8 @@ DATABASES = {
         'NAME': 'base_pedagogique',       # Le nom exact de ta base sur PhpMyAdmin
         'USER': 'root',                  # Ton identifiant PhpMyAdmin (souvent root)
         'PASSWORD': '',                  # Ton mot de passe (laisse vide '' si tu n'en as pas)
-        'HOST': 'localhost',             # Ton serveur local
-        'PORT': '3307',                  # Le port par défaut de MySQL
+        'HOST': 'ubuntu',             # Ton serveur local
+        'PORT': '3306',                  # Le port par défaut de MySQL
 
     }
 }
@@ -136,5 +139,6 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-AUTH_USER_MODEL = 'auth.User'
+# Use custom user model from `accounts` app
+AUTH_USER_MODEL = 'accounts.User'
 

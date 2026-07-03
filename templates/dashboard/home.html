@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block content %}
+<div style="max-width:900px;margin:24px auto;padding:16px;">
+    <h1>Tableau de bord</h1>
+    <p>Bienvenue, {{ request.user.username }}. Voici un aperçu rapide :</p>
+    <ul>
+        <li>Nombre total d'utilisateurs : {{ stats.users_count }}</li>
+    </ul>
+    <p><a href="/admin/">Accéder à l'administration Django</a></p>
+</div>
+{% endblock %}

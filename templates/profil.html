@@ -161,6 +161,11 @@
                         <span>Panel d'administration</span>
                     </a>
                 {% endif %}
+                {% if user.is_staff %}
+                    <a href="{% url 'dashboard_home' %}" class="action-btn secondary">
+                        <span>Tableau de bord</span>
+                    </a>
+                {% endif %}
             </div>
         </section>
         </div>

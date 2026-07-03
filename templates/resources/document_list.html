@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'resources.css' %}">
+{% endblock %}
+
+{% block title %}Documents pédagogiques{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Documents pédagogiques</h1>
+    <a class="button" href="{% url 'document_create' %}">Ajouter un document</a>
+</div>
+
+{% if documents %}
+    <div class="document-grid">
+        {% for document in documents %}
+            <article class="document-card">
+                <h2>{{ document.title }}</h2>
+                <p>{{ document.description }}</p>
+                <p class="document-meta">Ajouté par {{ document.uploaded_by.username if document.uploaded_by else 'Anonyme' }} le {{ document.created_at|date:'d/m/Y H:i' }}</p>
+                <div class="document-actions">
+                    <a class="button secondary" href="{{ document.file.url }}" download>Télécharger</a>
+                    <a class="button" href="{% url 'document_update' document.pk %}">Modifier</a>
+                    <a class="button danger" href="{% url 'document_delete' document.pk %}">Supprimer</a>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Aucun document disponible pour le moment.</p>
+{% endif %}
+{% endblock %}
