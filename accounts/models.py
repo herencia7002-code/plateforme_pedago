@@ -3,12 +3,12 @@ from django.db import models
 
 # Create your models here.
 # accounts/models.py
-from django.contrib.auth.models import AbstractUser
+
 
 class User(AbstractUser):
     ROLE_CHOICES = [
         ('teacher', 'Enseignant'),
-        ('student', 'Étudiant'),
+        ('student', 'Elève'),
         ('admin', 'Administrateur'),
     ]
 

@@ -82,16 +82,14 @@ WSGI_APPLICATION = 'plateforme_pedago.wsgi.application'
 
 DATABASES = {
     'default': {
-       'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'base_pedagogique',       # Le nom exact de ta base sur PhpMyAdmin
-        'USER': 'root',                  # Ton identifiant PhpMyAdmin (souvent root)
-        'PASSWORD': '',                  # Ton mot de passe (laisse vide '' si tu n'en as pas)
-        'HOST': 'ubuntu',             # Ton serveur local
-        'PORT': '3306',                  # Le port par défaut de MySQL
-
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'base_pedagogique',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

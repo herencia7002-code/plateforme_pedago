@@ -13,7 +13,7 @@
     <p>Êtes-vous sûr de vouloir supprimer le document "{{ document.title }}" ? Cette action est irréversible.</p>
     <form method="post">
         {% csrf_token %}
-        <button type="submit" class="button danger">Oui, supprimer</button>
+        <button type="submit" class="button danger">Supprimer</button>
         <a href="{% url 'document_list' %}" class="button secondary">Annuler</a>
     </form>
 </div>
