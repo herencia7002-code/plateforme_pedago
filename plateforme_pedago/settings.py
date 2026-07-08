@@ -84,9 +84,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'base_pedagogique',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'USER': 'django_user',
+        'PASSWORD': 'enfpe',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }

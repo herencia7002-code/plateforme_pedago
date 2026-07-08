@@ -1,15 +1,15 @@
 from django.contrib import admin
-from .models import Category, Subject
+from .models import Niveau, Matiere
 
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-	list_display = ('name', 'created_at')
-	search_fields = ('name', 'description')
+@admin.register(Niveau)
+class NiveauAdmin(admin.ModelAdmin):
+    list_display = ("nom",)
+    search_fields = ("nom",)
 
 
-@admin.register(Subject)
-class SubjectAdmin(admin.ModelAdmin):
-	list_display = ('name', 'category', 'created_at')
-	search_fields = ('name', 'description')
-	list_filter = ('category',)
+@admin.register(Matiere)
+class MatiereAdmin(admin.ModelAdmin):
+    list_display = ("nom", "niveau")
+    list_filter = ("niveau",)
+    search_fields = ("nom",)

@@ -10,9 +10,9 @@ admin.site.index_title = 'Gestion'
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-	list_display = ('username', 'email', 'role', 'is_staff', 'is_active')
+	list_display = ('username', 'email', 'school', 'role', 'is_staff', 'is_active')
 	list_filter = ('role', 'is_staff', 'is_active')
-	search_fields = ('username', 'email')
+	search_fields = ('username', 'email', 'school')
 
 
 @admin.register(Course)
@@ -26,3 +26,4 @@ class CourseAdmin(admin.ModelAdmin):
 class EnrollmentAdmin(admin.ModelAdmin):
 	list_display = ('student', 'course', 'enrolled_at')
 	search_fields = ('student__username', 'course__title')
+

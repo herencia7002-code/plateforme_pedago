@@ -17,8 +17,12 @@ class User(AbstractUser):
     bio = models.TextField(blank=True)
     profile_photo = models.ImageField(upload_to='profile_photos/', blank=True, null=True)
 
+    
     def __str__(self):
-        return self.username
+        return f"{self.username} ({self.get_role_display()})"
+
+    def is_teacher(self):
+        return self.role == 'teacher'
 
 
 class Course(models.Model):

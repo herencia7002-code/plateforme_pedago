@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ document.title }}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/resources.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+    <div class="card border-0 shadow-lg rounded-4">
+        <div class="card-body p-5">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h2 class="fw-bold text-primary"> {{ document.title }} </h2>
+                    <div class="mt-3">
+                        <span class="badge bg-primary me-2"> {{ document.matiere }} </span>
+                        <span class="badge bg-success me-2"> {{ document.niveau }}</span>
+                    </div>
+                </div>
+                <div>
+                    <a href="{% url 'download_document' document.id %}"
+                       target="_blank"
+                       class="btn btn-success btn-lg">
+                        <i class="bi bi-download"></i>
+                        Télécharger
+                    </a>
+                </div>
+            </div>
+            <hr>
+            <p class="lead"> {{ document.description }} </p>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h6 class="text-muted">Auteur</h6>
+                    <p>{{ document.auteur }} </p>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="text-muted">
+                        Date de publication
+                    </h6>
+                    <p> {{ document.created_at|date:"d/m/Y H:i" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-2">
+            {{ document.average_rating|floatformat:1 }}/5
+    </div>
+    <div class="mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            {% if document.file.url|lower|slice:"-4:" == ".pdf" %}
+           <h3>Aperçu du document</h3>
+            <embed src="{{ document.file.url }}" type="application/pdf" width="100%" height="700px">
+            {% else %}
+            <h3>Document</h3>
+            <a href="{{ document.file.url }}" target="_blank">
+                <img src="{% static 'images/file_icon.png' %}" alt="File Icon" width="100" height="100">
+            </a>
+            {% endif %}
+            <h5>Tags</h5>
+            {% for tag in document.tags.all %}
+            <span class="badge bg-primary">
+            {{ tag.name }}
+            </span>
+            {% empty %}
+            <span class="text-muted">
+                Aucun tag
+            </span>
+            {% endfor %}
+            <h3>Commentaires</h3>
+            <span class="badge bg-dark fs-6"> {{ document.comments.count }} commentaire{{ document.comments.count|pluralize }}</span>
+        </div>
+        {% for comment in document.comments.all %}
+        <div class="card shadow-sm border-0 mb-3 rounded-4">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="avatar me-3">{{ comment.auteur.username|first|upper }}</div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <h5> {{ comment.auteur.username }}</h5>
+                            <small class="text-muted">{{ comment.created_at|date:"d/m/Y H:i" }} </small>
+                        </div>
+                        <p class="mt-3">{{ comment.content }} </p>
+                        <div>
+                            <button class="btn btn-outline-secondary btn-sm"> Répondre</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="alert alert-info rounded-4">
+            Aucun commentaire pour le moment.
+            Soyez le premier à commenter !
+        </div>
+        {% endfor %}
+    </div>
+    <div class="card shadow-lg border-0 rounded-4 mt-5">
+        <div class="card-body">
+            <h3 class="mb-4"> Ajouter un commentaire</h3>
+            {% if user.is_authenticated %}
+            <form method="post"
+                  action="{% url 'add_comment' document.id %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-primary btn-lg"> Publier </button>
+            </form>
+            {% else %}
+            <div class="alert alert-warning"> Connectez-vous pour publier un commentaire. </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
