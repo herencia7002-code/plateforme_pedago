@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title> FORMULAIRE </title>
+        <style>
+            body {
+                font-family:arial,san-serif;margin: 20px;
+            }
+            form-container {
+                width: 60%;
+                margin: 0 auto;
+                padding: 20px;
+                border: 1px solid#ccc;
+                background-color: #f9f9f9;
+            }
+            h1 {
+                text-align: center;
+            }
+            form-section {
+                margin-bottom: 20px;
+            }
+            label {
+                display: block;
+                margin-bottom: 5px;
+            }
+            input[type="text"],
+            input[type="number"],
+            select,
+            textarea{
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 10px;
+            }
+            radio-group input,
+            :checked-group input{
+                margin-bottom: 10px;
+            }
+            button{
+                padding: 10px 20px;
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+            button:hover{
+                background-color: 45a049;
+            }
+        </style>
+    </head>
+    <body>
+        <div class ='form-container'>
+            <h1> Formulaire de Scolarité </h1>
+            <form action="#">
+                <FIeldset>
+                    <legend>Etat civil </legend>
+                <!--Etat civil-->
+                <h2><u> Etat civil </u></h2>
+                <div class = 'form-section'>
+                    <label for="name"> Nom : </label>
+                    <input type="text" name="name" id="name" width="50%">
+                    <label for="prénom"> Prénom :</label>
+                    <input type="text" id="prénom" name="prenom required">
+                    <label for="age"> Age: </label>
+                    <input type="nombre" id="age" name="age required">
+                </div>
+        </div>
+                
+        <fieldset>
+            <legend>Scolarité</legend>
+        <!--Scolarité-->
+        <h2> <u>Scolarité </u></h2>
+        <div class "form-section">
+            <label for="class"> Classe: </label>
+            <select name="class" id="class">
+                <option value="seconde">Seconde</option>
+                <option value="Premiere"> Premiere</option>
+                <option value="terminale"> Terminale</option>
+            </select>
+            <label for="serie">Série :</label>
+            <div class="radio-group">
+                <input type="radio" id="s" name="serie" value="S"required>
+                <label for="s">S</label>
+                <input type="radio" id="es" name="Série" value="ES">
+                <label for="es"> ES </label>
+                <input type="radio" name="l" id="serie" value="L">
+                <label for="l">L</label>
+                <input type="radio"id="indeterminé" name="serie" value="indeterminé">
+                <label for="indeterminé">Indeterminé</label>
+                <input type="radio" id="redoublant" name="Série" value="redoublant">
+                <label for="redoublant">Redoublant</label>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend> Orientation</legend>
+        <!--Orientation-->
+        <h2> <u>orientation</u></h2>
+        <div class="form-section">
+            <label> Qu'envisagez vous pour vos études ?</label>
+            <div class ="checkbox-group">
+                <input type="checkbox" name="orientation" id="université" value="université">
+                <label for="université">Université </label>
+                <input type="checkbox" id="bts" name="orientation" value="bts">
+                <label for="bts"> BTS </label>
+                <input type="checkbox" id="iut" name="orientation" value="iut">
+                <label for="iut">IUT</label>
+                <input type="checkbox" id="école" name="orientation" value="école">
+                <label for="école"> Ecole de commerce</label>
+                <input type="checkbox",id="ingenieur"name="orientation" value="ingenieur">
+                <label for="ingenieur"> Ecole d'ingenieur </label>
+
+            </div>
+        </div>
+        
+        <!--commentaires éventuels-->
+        <h2><u> Commention éventuels </u> </h2>
+        <div class="form-selection">
+            <label for="comments"> commentaires</label>
+            <textarea name="comments" id="comments" rows="10" cols="20" placeholder="saissez vos commentaires..."></textarea>
+        </div>
+        <div class="form-section">
+            <button type="submit"> Validez vos choix</button>
+            <button type="reset"> Réintialiser </button> 
+        </div>
+    </FIeldset>
+    </form>
+    </body>
+</html>

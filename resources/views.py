@@ -32,6 +32,7 @@ def document_create(request):
 
 @login_required
 def document_update(request, pk):
+    
     document = get_object_or_404(Document, pk=pk)
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES, instance=document)
@@ -78,4 +79,3 @@ def download_document(request, pk):
     document.nb_telechargements += 1
     document.save()
     return FileResponse( document.file.open(), as_attachment=True, filename=document.file.name.split('/')[-1])
-

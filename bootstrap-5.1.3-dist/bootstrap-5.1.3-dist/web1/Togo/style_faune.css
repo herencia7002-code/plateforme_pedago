@@ -1,0 +1,51 @@
+* {
+}
+.dixTMG{
+    text-align: center;
+    padding: -10px;
+    background-color: white;
+}
+
+.dixTMG img{
+    height: 250px;
+    width: 150px;
+    border-radius: 5px;
+    border: solid 1px gray;
+    padding: 5px;
+}
+
+.flou {
+    filter: blur(4px);
+}
+
+.flow:hover{
+    filter: brightness(100%);
+}
+
+.luminosité{
+    filter: brightness(200px);
+}
+
+.contrast {
+    filter:grayscale(200px);
+}
+
+.transparence {
+    filter: opacity(50%);
+}
+
+.negatif {
+    filter: invert(100%);
+}
+
+.ombre {
+    filter: drop-shadow(5px 5px 8px green);
+}
+.blurhover {
+    filter: blur(4px);
+}
+
+.blurhover:hover{
+    filter: blur(4px);
+    transition: 800ms;
+}

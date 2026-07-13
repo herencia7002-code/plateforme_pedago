@@ -109,3 +109,9 @@ button.submit:hover {
     padding: 1.3rem;
   }
 }
+.auth-footer {
+  text-align: center;
+  margin-top: 1rem;
+  color: var(--muted);
+  color:red; margin-bottom:15px;
+}

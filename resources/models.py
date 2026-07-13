@@ -40,6 +40,7 @@ class Document(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    nb_telechargements = models.PositiveIntegerField(default=0)
     @property
     def average_rating(self):
         return self.ratings.aggregate(

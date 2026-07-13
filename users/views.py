@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
-
+from resources.models import Document
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -23,9 +23,11 @@ class EmailAuthenticationForm(forms.Form):
     email = forms.EmailField(label="Email")
     password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
 
-
 def home(request):
-    return render(request, 'index.html')
+    documents = Document.objects.select_related("auteur", "matiere", "niveau"
+    ).order_by("-created_at")
+    return render(request,"index.html",{    "documents": documents}
+    )
 
 
 def inscription(request):

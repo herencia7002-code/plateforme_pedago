@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Administration{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+<div class="dashboard-wrapper">
+    <!-- Barre latérale -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h4>Plateforme</h4>
+            <p>Administration</p>
+        </div>
+        <nav class="sidebar-menu">
+            <a href="{% url 'dashboard' %}">  Tableau de bord </a>
+            <a href="#"> Documents </a>
+            <a href="#">   Utilisateurs </a>
+            <a href="#">  Matières </a>
+            <a href="#"> Niveaux </a>
+            <a href="#">   Commentaires </a>
+            <a href="#">   Notations </a>
+            <a href="#">   Paramètres</a>
+        </nav>
+    </aside>
+    <!-- Partie droite -->
+    <div class="main-content">
+        <!-- Barre supérieure -->
+        <header class="topbar">
+            <h3> {% block page_title %} Tableau de bord {% endblock %} </h3>
+            <div class="admin-info">
+                Bonjour, <strong> {{ request.user.username }} </strong>
+            </div>
+        </header>
+        <!-- Contenu -->
+        <main class="content">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+{% block extra_js %}
+{% endblock %}
+</body>
+</html>

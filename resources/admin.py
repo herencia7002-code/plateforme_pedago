@@ -38,7 +38,7 @@ class RessourceAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('auteur', 'document', 'created_at',)
     list_filter = ('created_at',)
-    search_fields = ('auteur__username', 'content',)
+    search_fields = ('author__username', 'content',)
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):

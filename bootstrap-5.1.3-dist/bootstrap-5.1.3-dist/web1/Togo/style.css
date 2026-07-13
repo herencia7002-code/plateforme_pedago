@@ -1,0 +1,256 @@
+*{
+    font-family: bahnschrift,cambria,tahoma,'Times New Roman', Times, serif;
+    font-size: 14px;
+    font-style:italic ;
+    font-weight: 500;
+    font-variant: normal,100,18px/20px verdana;
+}
+
+
+
+
+
+header{
+    background-color: blueviolet;
+   /* background: linear-gradient(45deg,violet,purple,yellow);
+    background: radial-gradient(green,red);*/
+    background: url(imagest/region\ savane.jpeg);
+    background-size: 50px 50px;
+    background-repeat: no-repeat;
+    background-position: right bottom;
+}
+
+nav a:link{
+    color: tomato;
+}
+
+nav a:visited {
+    color: chocolate;
+}
+nav a:hover {
+    color: deeppink;
+}
+
+nav a:active {
+    color: royalblue;
+}
+
+nav ul {
+    /*list-style-type: square;
+    list-style-position: inside;
+    list-style-image: url("imagest/region\ plateaux.jpeg");*/
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: green;
+}
+
+nav ul li {
+    float: left;
+}
+
+nav ul li a {
+    display: block;
+    width: 100px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    transition: 100ms;
+}
+.notification{
+        border: 1px solid blue;
+        border-radius: 5px;
+        background-color: lightseagreen;
+        height: 300px;
+        width: 200px;
+        position: fixed;
+        bottom: -280px;
+        right: 0px;
+
+        transition: 100ms;
+}
+.notification:hover {
+        bottom: 0px;
+        height: 500px;
+        background-color: gold;
+}
+
+.infobulle {
+    position: static;
+}
+
+.infobulle span {
+            visibility: hidden;
+            position: relative;
+            bottom: -10px;
+            left: -50px;
+}
+
+.infobulle span:hover {
+    visibility: visible;
+}
+.divfloat {
+    border: 2px solid tomato;
+    padding: 10px;
+    overflow: scroll;
+    height: 200px;
+}
+.divfloat img {
+    float: left;
+    clear: both;
+    margin-right: 10px;
+}
+.divfloat p {
+    text-align: justify;
+}
+
+h1{
+    background: url(imagest/region\ central.jpeg);
+    color: violet;
+    background-color: red,green,violet;
+}
+section{
+    border: 1px solid violet;
+    border-style: dotted;
+    border-color: pink;
+    border-radius: 0px 10px 0px 10px;
+    box-shadow: 4px 4px 4px white;
+
+    margin: 15px 15px 15px 15px;
+    padding: 10px;
+}
+    .figetop {
+        position: sticky;
+        top: 0px;
+    }
+
+article{
+    color: #F00;
+    text-align: justify;
+    text-transform: uppercase;
+    text-indent: 50Px;
+    direction: rtl;
+    text-decoration:none;
+    text-shadow: 
+    1px -1px 1px white,
+    -1px 1px green;
+
+    letter-spacing: normal;
+    word-spacing: normal;
+
+}
+
+header p{
+    background-color: white;
+    opacity: 0.8;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*{
+    color: blue !important;
+    font-family: cambria,"times new roman";
+}
+
+h1{
+    color: red !important;
+}
+#slogan{
+    color: green;
+}
+
+.bggray{
+    background-color: gray;
+}
+
+header,nav,footer{
+    border: 1px solid #000;
+}
+
+footer p{
+    color: purple;
+}
+.textorange{
+    color: orange;
+}
+/*/
+

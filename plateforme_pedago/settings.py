@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$cz-%hg1253ku^&9-k6l@mi%h__wi^_paa*n#ps$w@n3e!*%^o
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # Application definition
 
@@ -135,7 +135,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 # Use custom user model from `accounts` app
 AUTH_USER_MODEL = 'accounts.User'
