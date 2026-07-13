@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Administration{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
@@ -19,13 +20,12 @@
         </div>
         <nav class="sidebar-menu">
             <a href="{% url 'dashboard' %}">  Tableau de bord </a>
-            <a href="#"> Documents </a>
-            <a href="#">   Utilisateurs </a>
-            <a href="#">  Matières </a>
-            <a href="#"> Niveaux </a>
-            <a href="#">   Commentaires </a>
-            <a href="#">   Notations </a>
-            <a href="#">   Paramètres</a>
+            <a href="{% url 'dashboard_documents' %}"> Documents </a>
+            <a href="{% url 'dashboard_utilisateurs' %}">   Utilisateurs </a>
+            <a href="{% url 'dashboard_matieres' %}">  Matières </a>
+            <a href="{% url 'dashboard_niveaux' %}"> Niveaux </a>
+            <a href="{% url 'dashboard_commentaires' %}">   Commentaires </a>
+            <a href="{% url 'dashboard_parametres' %}">   Paramètres</a>
         </nav>
     </aside>
     <!-- Partie droite -->
@@ -34,7 +34,7 @@
         <header class="topbar">
             <h3> {% block page_title %} Tableau de bord {% endblock %} </h3>
             <div class="admin-info">
-                Bonjour, <strong> {{ request.user.username }} </strong>
+                Bonjour <strong> {{ request.user.username }} </strong>
             </div>
         </header>
         <!-- Contenu -->

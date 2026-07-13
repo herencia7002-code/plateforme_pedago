@@ -77,145 +77,92 @@ body{
   .document-actions{flex-wrap:wrap}
 }
 body{
-
     background:#f4f6f9;
-
 }
 
 .card{
-
     border-radius:20px;
-
 }
 
 .avatar{
-
     width:65px;
-
     height:65px;
-
     border-radius:50%;
-
     background:linear-gradient(135deg,#0d6efd,#6610f2);
-
     color:white;
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     font-size:28px;
-
     font-weight:bold;
-
 }
 
 .card h2{
-
     font-weight:700;
-
 }
 
 .card h3{
-
     font-weight:600;
-
 }
 
 .card h5{
-
     font-weight:600;
-
 }
 
 .badge{
-
     font-size:15px;
-
     padding:8px 14px;
-
 }
 
 .btn-success{
-
     border-radius:12px;
-
 }
 
 .btn-primary{
-
     border-radius:12px;
-
 }
 
 .btn-outline-primary{
-
     border-radius:30px;
-
 }
 
 .btn-outline-secondary{
-
     border-radius:30px;
-
 }
 
 textarea{
-
     min-height:150px;
-
     border-radius:15px !important;
-
 }
 
 input,select{
-
     border-radius:10px !important;
-
 }
 
 .card-body{
-
     padding:35px;
-
 }
 
 .commentaire{
-
     transition:.3s;
-
 }
 
 .commentaire:hover{
-
     transform:translateY(-3px);
-
 }
 
 .card:hover{
-
     box-shadow:0 10px 30px rgba(0,0,0,.12);
-
 }
 
 @media(max-width:768px){
-
 .avatar{
-
 width:50px;
-
 height:50px;
-
 font-size:22px;
-
 }
 
 .card-body{
-
 padding:20px;
-
 }
-
 }

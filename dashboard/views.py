@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
-
-
+from django.shortcuts import redirect, get_object_or_404
+from .forms import DocumentForm
+from django.core.paginator import Paginator
 from accounts.models import User
 from resources.models import Document, Comment
 from categories.models import Matiere, Niveau
 
 @staff_member_required
 def dashboard(request):
-
     derniers_utilisateurs = (
     User.objects
     .order_by("-date_joined")[:8]
@@ -30,3 +30,140 @@ def dashboard(request):
         "derniers_documents": derniers_documents,
     }
     return render(request, "dashboard/dashboard.html", context)
+
+@staff_member_required
+def documents(request):
+    documents = (
+        Document.objects
+        .select_related("auteur", "matiere", "niveau")
+        .order_by("-created_at")
+    )
+    q = request.GET.get("q")
+    matiere = request.GET.get("matiere")
+    niveau = request.GET.get("niveau")
+    if q:
+        documents = documents.filter(
+            Q(title__icontains=q) |
+            Q(description__icontains=q) |
+            Q(auteur__username__icontains=q)
+        )
+    if matiere and matiere != "all":
+        documents = documents.filter(matiere_id=int(matiere))
+    if niveau and niveau != "all":
+        documents = documents.filter(niveau_id=int(niveau))
+    paginator = Paginator(documents, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    context = {
+        "documents": page_obj,
+        "page_obj": page_obj,
+        "matieres": Matiere.objects.all(),
+        "niveaux": Niveau.objects.all(),
+    }
+
+    return render(
+        request,
+         "dashboard/documents.html",
+        context
+    )
+
+@staff_member_required
+def utilisateurs(request):
+    utilisateurs = User.objects.order_by("-date_joined")
+    return render(
+        request,
+        "dashboard/utilisateurs.html",
+        {"utilisateurs": utilisateurs},
+    )
+
+@staff_member_required
+def matieres(request):
+    matieres = Matiere.objects.all()
+    return render(
+        request,
+        "dashboard/matieres.html",
+        {"matieres": matieres},
+    )
+
+@staff_member_required
+def niveaux(request):
+    niveaux = Niveau.objects.all()
+    return render(
+        request,
+        "dashboard/niveaux.html",
+        {"niveaux": niveaux},
+    )
+
+@staff_member_required
+def commentaires(request):
+    commentaires = (
+        Comment.objects
+        .select_related("auteur", "document")
+        .order_by("-created_at")
+    )
+    return render(
+        request,
+        "dashboard/commentaires.html",
+        {"commentaires": commentaires},
+    )
+@staff_member_required
+def parametres(request):
+    return render(request, "dashboard/parametres.html")
+
+@staff_member_required
+def document_create(request):
+    if request.method == "POST":
+        form = DocumentForm(
+            request.POST,
+            request.FILES
+        )
+        if form.is_valid():
+            form.save()
+            return redirect("dashboard_documents")
+    else:
+        form = DocumentForm()
+    return render(
+        request,
+        "dashboard/document_form.html",
+        {
+            "form": form,
+            "titre": "Ajouter un document"
+        }
+    )
+@staff_member_required
+def document_update(request, pk):
+    document = get_object_or_404(Document, pk=pk)
+    if request.method == "POST":
+        form = DocumentForm(
+            request.POST,
+            request.FILES,
+            instance=document
+        )
+        if form.is_valid():
+            form.save()
+            return redirect("dashboard_documents")
+    else:
+        form = DocumentForm(instance=document)
+    return render(
+        request,
+        "dashboard/document_form.html",
+        {
+            "form": form,
+            "titre": "Modifier un document"
+        }
+    )
+@staff_member_required
+def document_delete(request, pk):
+    document = get_object_or_404(Document, pk=pk)
+
+    if request.method == "POST":
+        document.delete()
+        return redirect("documents")
+
+    return render(
+        request,
+        "dashboard/document_confirm_delete.html",
+        {
+            "document": document,
+        }
+    )

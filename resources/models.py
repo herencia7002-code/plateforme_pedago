@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.db.models import Avg
+from django.db.models import F
 
 
 class Document(models.Model):
@@ -40,7 +41,22 @@ class Document(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    nb_telechargements = models.PositiveIntegerField(default=0)
+    nb_telechargements = models.PositiveIntegerField(
+    default=0,
+    verbose_name="Téléchargements"
+)
+    download_count = models.PositiveIntegerField(default=0)
+    STATUS_CHOICES = [
+    ("pending", "En attente"),
+    ("approved", "Validé"),
+    ("rejected", "Refusé"),
+]
+
+    status = models.CharField(
+    max_length=20,
+    choices=STATUS_CHOICES,
+    default="pending",
+)
     @property
     def average_rating(self):
         return self.ratings.aggregate(
@@ -55,6 +71,13 @@ class Document(models.Model):
 
     def __str__(self):
         return self.title
+
+    def incrementer_telechargements(self):
+        self.download_count = F("download_count") + 1
+        self.save(update_fields=["download_count"])
+        self.refresh_from_db()
+
+
 
 class Ressource(models.Model):
     TYPE_CHOICES = [

@@ -9,76 +9,14 @@ Tableau de bord
 {% endblock %}
 
 {% block content %}
-<div class="row g-4">
+
+<!-- Cartes des statistiques -->
+<div class="row g-4 mb-5">
     <div class="col-lg-3 col-md-6">
         <div class="stat-card">
             <h6>Documents</h6>
             <h2>{{ nb_documents }}</h2>
         </div>
-        <div class="card shadow-sm border-0 rounded-4 mt-5">
-
-    <div class="card-header bg-white">
-        <h4 class="mb-0">Derniers documents publiés</h4>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle">
-                <thead>
-                    <tr>
-                        <th>Titre</th>
-                        <th>Auteur</th>
-                        <th>Matière</th>
-                        <th>Niveau</th>
-                        <th>Date</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for document in derniers_documents %}
-                    <tr>
-                        <td>{{ document.title }}</td>
-                        <td>{{ document.auteur }}</td>
-                        <td>{{ document.matiere }}</td>
-                        <td>{{ document.niveau }}</td>
-                        <td>{{ document.created_at|date:"d/m/Y" }}</td>
-                        <td>
-                            <a href="{% url 'document_detail' document.pk %}" class="btn btn-primary btn-sm"> Voir </a>
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="6" class="text-center">  Aucun document disponible. </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-<div class="row mt-5">
-    <!-- Derniers utilisateurs -->
-    <div class="col-lg-4">
-        <div class="card shadow-sm border-0 rounded-4 h-100">
-            <div class="card-header bg-white">
-                <h4 class="mb-0"> Nouveaux utilisateurs </h4>
-            </div>
-            <div class="card-body">
-                {% for user in derniers_utilisateurs %}
-                <div class="d-flex justify-content-between align-items-center border-bottom py-3">
-                    <div>
-                        <strong> {{ user.username }} </strong>
-                        <br>
-                        <small class="text-muted"> {{ user.role }} </small>
-                    </div>
-                    <small>{{ user.date_joined|date:"d/m" }} </small>
-                </div>
-                {% empty %}
-                    Aucun utilisateur.
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</div>
     </div>
     <div class="col-lg-3 col-md-6">
         <div class="stat-card">
@@ -86,7 +24,6 @@ Tableau de bord
             <h2>{{ nb_users }}</h2>
         </div>
     </div>
-
     <div class="col-lg-3 col-md-6">
         <div class="stat-card">
             <h6>Commentaires</h6>
@@ -99,6 +36,7 @@ Tableau de bord
             <h2>{{ nb_teachers }}</h2>
         </div>
     </div>
+
     <div class="col-lg-3 col-md-6">
         <div class="stat-card">
             <h6>Étudiants</h6>
@@ -111,7 +49,6 @@ Tableau de bord
             <h2>{{ nb_matieres }}</h2>
         </div>
     </div>
-
     <div class="col-lg-3 col-md-6">
         <div class="stat-card">
             <h6>Niveaux</h6>
@@ -119,6 +56,77 @@ Tableau de bord
         </div>
     </div>
 </div>
-<h2>Bienvenue dans l'espace d'administration</h2>
-<p> Cette zone accueillera les statistiques et les outils de gestion. </p>
+<!-- Documents + Utilisateurs -->
+<div class="row">
+    <!-- Derniers documents -->
+    <div class="col-lg-8 mb-4">
+        <div class="card shadow-sm border-0 rounded-4 h-100">
+            <div class="card-header bg-white">
+                <h4 class="mb-0">Derniers documents publiés</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Auteur</th>
+                                <th>Matière</th>
+                                <th>Niveau</th>
+                                <th>Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for document in derniers_documents %}
+                            <tr>
+                                <td>{{ document.title }}</td>
+                                <td>{{ document.auteur }}</td>
+                                <td>{{ document.matiere }}</td>
+                                <td>{{ document.niveau }}</td>
+                                <td>{{ document.created_at|date:"d/m/Y" }}</td>
+                                <td>
+                                    <a href="{% url 'document_detail' document.pk %}"class="btn btn-primary btn-sm"> Voir </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center"> Aucun document disponible. </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Nouveaux utilisateurs -->
+    <div class="col-lg-4 mb-4">
+        <div class="card shadow-sm border-0 rounded-4 h-100">
+            <div class="card-header bg-white">
+                <h4 class="mb-0">Nouveaux utilisateurs</h4>
+            </div>
+            <div class="card-body">
+                {% for user in derniers_utilisateurs %}
+                <div class="d-flex justify-content-between align-items-center py-3 border-bottom">
+                    <div>
+                        <strong>{{ user.username }}</strong><br>
+                        <small class="text-muted">{{ user.role }}</small>
+                    </div>
+                    <small>{{ user.date_joined|date:"d/m" }}</small>
+                </div>
+                {% empty %}
+                <p class="text-muted mb-0"> Aucun utilisateur. </p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Message de bienvenue -->
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-body">
+        <h3>Bienvenue dans l'espace d'administration</h3>
+        <p class="text-muted mb-0">  Cette zone accueillera tous les outils de gestion de la plateforme. </p>
+    </div>
+</div>
 {% endblock %}

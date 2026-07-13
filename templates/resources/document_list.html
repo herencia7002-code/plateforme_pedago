@@ -19,11 +19,16 @@
             <article class="document-card">
                 <h2>{{ document.title }}</h2>
                 <p>{{ document.description }}</p>
-                <p class="document-meta">Ajouté par {{ document.uploaded_by.username if document.uploaded_by else 'Anonyme' }} le {{ document.created_at|date:'d/m/Y H:i' }}</p>
-                <div class="document-actions">
-                    <a class="button secondary" href="{{ document.file.url }}" download>Télécharger</a>
-                    <a class="button" href="{% url 'document_update' document.pk %}">Modifier</a>
-                    <a class="button danger" href="{% url 'document_delete' document.pk %}">Supprimer</a>
+                <p class="document-meta"> Ajouté par {% if document.auteur %}{{ document.auteur.username }} {% else %}Anonyme {% endif %}
+                 le {{ document.created_at|date:"d/m/Y H:i" }}
+                </p>
+                <div class="d-flex gap-2 mt-3 flex-wrap">
+                    <a href="{{ document.file.url }}" class="btn btn-success btn-sm" download> 
+                          <i class="bi bi-download"></i> </a>
+                    <a href="{% url 'document_update' document.pk %}" class="btn btn-warning btn-sm"> 
+                        <i class="bi bi-pencil"></i> </a>
+                    <a href="{% url 'document_delete' document.pk %}" class="btn btn-danger btn-sm"> 
+                        <i class="bi bi-trash"></i></a>
                 </div>
             </article>
         {% endfor %}
