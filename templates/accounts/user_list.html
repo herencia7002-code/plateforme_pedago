@@ -1,0 +1,72 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block title %}Gestion des utilisateurs{% endblock %}
+
+{% block page_title %}
+Gestion des utilisateurs
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-people-fill"></i>Liste des utilisateurs</h5>
+        <a href="{% url 'accounts:user_add' %}" class="btn btn-primary"> <i class="bi bi-person-plus"></i> Ajouter un utilisateur </a>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Photo</th>
+                    <th>Nom complet</th>
+                    <th>Nom d'utilisateur</th>
+                    <th>Email</th>
+                    <th>Rôle</th>
+                    <th>Statut</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td width="70">
+                        {% if user.profile_photo %}
+                            <img src="{{ user.profile_photo.url }}" class="rounded-circle" width="45"height="45">
+                        {% else %}
+                            <i class="bi bi-person-circle fs-2"></i>
+                        {% endif %}
+                    </td>
+                    <td>{{ user.first_name }} {{ user.last_name }}</td>
+                    <td> {{ user.username }}</td>
+                    <td> {{ user.email }} </td>
+                    <td> <span class="badge bg-info"> {{ user.get_role_display }}</span> </td>
+                    <td> {% if user.is_active %} <span class="badge bg-success"> Actif</span>
+                        {% else %}
+                            <span class="badge bg-danger"> Désactivé</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        <a href="{% url 'accounts:user_edit' user.pk %}" class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'accounts:user_delete' user.pk %}" class="btn btn-danger btn-sm"> <i class="bi bi-trash"></i>
+                        </a>
+                        <form method="post" action="{% url 'accounts:user_toggle' user.pk %}" class="d-inline">
+                            {% csrf_token %}
+                            {% if user.is_active %}
+                                <button class="btn btn-secondary btn-sm"><i class="bi bi-lock"></i></button>
+                            {% else %}
+                                <button class="btn btn-success btn-sm"> <i class="bi bi-unlock"></i> </button>
+                            {% endif %}
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">  Aucun utilisateur trouvé.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

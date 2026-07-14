@@ -29,6 +29,7 @@ urlpatterns = [
     path('profil/', profil, name='profil'),
     path('resources/', include('resources.urls')),
     path('dashboard/', include('dashboard.urls')),
+    path('accounts/', include('accounts.urls')),
 ]
 
 if settings.DEBUG:

@@ -1,10 +1,11 @@
 from django.urls import path
+from accounts.views import UserDashboardView
 from . import views
 
 urlpatterns = [
     path("", views.dashboard, name="dashboard"),
     path("documents/", views.documents, name="dashboard_documents"),
-    path("utilisateurs/", views.utilisateurs, name="dashboard_utilisateurs"),
+    path("utilisateurs/",UserDashboardView.as_view(),name="dashboard_utilisateurs"),
     path("matieres/", views.matieres, name="dashboard_matieres"),
     path("niveaux/", views.niveaux, name="dashboard_niveaux"),
     path("commentaires/", views.commentaires, name="dashboard_commentaires"),

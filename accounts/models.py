@@ -24,6 +24,11 @@ class User(AbstractUser):
     def is_teacher(self):
         return self.role == 'teacher'
 
+    def is_student(self):
+        return self.role == "student"
+
+    def is_admin(self):
+        return self.role == "admin"
 
 class Course(models.Model):
     title = models.CharField(max_length=255)

@@ -1,6 +1,6 @@
 {% extends "dashboard/base_dashboard.html" %}
 
-{% block title %}Utilisateurs{% endblock %}
+{% block title %}Gestion des utilisateurs{% endblock %}
 
 {% block page_title %}
 Gestion des utilisateurs
@@ -8,6 +8,139 @@ Gestion des utilisateurs
 
 {% block content %}
 
-<h2>Gestion des utilisateurs</h2>
+<div class="container-fluid">
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted">Utilisateurs</small>
+                            <h2 class="fw-bold mb-0">{{ total_users }}</h2>
+                        </div>
+                        <i class="bi bi-people-fill fs-1 text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted">Administrateurs</small>
+                            <h2 class="fw-bold mb-0">{{ total_admins }}</h2>
+                        </div>
+                        <i class="bi bi-shield-lock-fill fs-1 text-danger"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted">Enseignants</small>
+                            <h2 class="fw-bold mb-0">{{ total_teachers }}</h2>
+                        </div>
+                        <i class="bi bi-mortarboard-fill fs-1 text-success"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted">Elèves</small>
+                            <h2 class="fw-bold mb-0">{{ total_students }}</h2>
+                        </div>
+                        <i class="bi bi-person-workspace fs-1 text-warning"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Actions rapides -->
+    <div class="card shadow-sm border-0 rounded-4 mb-4">
+
+        <div class="card-header bg-white">
+            <h5 class="mb-0"><i class="bi bi-lightning-charge-fill"></i> Actions rapides</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <a href="{% url 'accounts:user_add' %}" class="btn btn-primary w-100 py-3"> <i class="bi bi-person-plus-fill"></i> <br> 
+                        Ajouter un utilisateur
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{% url 'accounts:user_list' %}" class="btn btn-success w-100 py-3"> <i class="bi bi-list-ul"></i><br>
+                        Liste des utilisateurs
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" class="btn btn-warning w-100 py-3"> <i class="bi bi-file-earmark-excel"></i><br> Exporter </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#"class="btn btn-info w-100 py-3 text-white"> <i class="bi bi-upload"></i><br> Importer </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Derniers utilisateurs -->
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-header bg-white d-flex justify-content-between">
+            <h5 class="mb-0">
+                <i class="bi bi-clock-history"></i> Derniers utilisateurs inscrits
+            </h5>
+            <a href="{% url 'accounts:user_list' %}" class="btn btn-outline-primary btn-sm">  Voir tout</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Rôle</th>
+                            <th>Statut</th>
+                            <th>Date d'inscription</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in recent_users %}
+                        <tr>
+                            <td> {{ user.first_name }} {{ user.last_name }}  </td>
+                            <td>{{ user.email }}</td>
+                            <td><span class="badge bg-info"> {{ user.get_role_display }} </span></td>
+                            <td>
+                                {% if user.is_active %}
+                                    <span class="badge bg-success">Actif</span>
+                                {% else %}
+                                    <span class="badge bg-danger">  Désactivé</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ user.date_joined|date:"d/m/Y H:i" }} </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted"> Aucun utilisateur enregistré. </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
