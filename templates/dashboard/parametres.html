@@ -3,11 +3,108 @@
 {% block title %}Paramètres{% endblock %}
 
 {% block page_title %}
-Paramètres
+Paramètres de la plateforme
 {% endblock %}
 
 {% block content %}
 
-<h2>Paramètres de la plateforme</h2>
+<div class="container-fluid">
+    <!-- En-tête -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body">
+            <h3 class="fw-bold mb-2"><i class="bi bi-gear-fill text-primary"></i>Paramètres généraux</h3>
+            <p class="text-muted mb-0">  Configurez les principaux paramètres de la plateforme pédagogique.</p>
+        </div>
+    </div>
+    <div class="row g-4">
+        <!-- Informations générales -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"> <i class="bi bi-building"></i> Informations générales</h5>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">  Nom de la plateforme </label>
+                            <input  type="text" class="form-control" value="Plateforme pédagogique">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">  Nom de l'établissement </label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"> Adresse email</label>
+                            <input type="email" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"> Téléphone </label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuration -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"> <i class="bi bi-sliders"></i> Configuration</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-check form-switch mb-3">
+                        <input  class="form-check-input" type="checkbox" checked>
+                        <label class="form-check-label"> Autoriser les inscriptions</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" checked>
+                        <label class="form-check-label"> Validation des documents avant publication  </label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" checked>
+                        <label class="form-check-label"> Autoriser les commentaires </label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox">
+                        <label class="form-check-label"> Mode maintenance</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4 g-4">
+        <!-- Sauvegarde -->
+
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-warning"> <h5 class="mb-0">  <i class="bi bi-cloud-arrow-down"></i>  Sauvegarde </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">  Effectuez une sauvegarde complète de la base de données.</p>
+                    <button class="btn btn-warning">  <i class="bi bi-download"></i> Sauvegarder</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sécurité -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0"> <i class="bi bi-shield-lock"></i>Sécurité </h5>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-outline-danger mb-3 w-100"> Modifier le mot de passe administrateur </button>
+                    <button class="btn btn-outline-secondary w-100"> Voir les journaux d'activité</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 text-end">
+        <button class="btn btn-primary btn-lg"> <i class="bi bi-check-circle"></i> Enregistrer les modifications </button>
+    </div>
+</div>
 
 {% endblock %}

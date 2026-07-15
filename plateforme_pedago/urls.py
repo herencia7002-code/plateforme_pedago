@@ -30,6 +30,8 @@ urlpatterns = [
     path('resources/', include('resources.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('accounts/', include('accounts.urls')),
+    path('categories/', include('categories.urls')),
+    path('commentaires/',include('comments.urls'),),
 ]
 
 if settings.DEBUG:

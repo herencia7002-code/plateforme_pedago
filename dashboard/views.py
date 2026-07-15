@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from accounts.models import User
 from resources.models import Document, Comment
 from categories.models import Matiere, Niveau
+from django.db.models import Q
 
 @staff_member_required
 def dashboard(request):
@@ -108,8 +109,12 @@ def commentaires(request):
     )
 @staff_member_required
 def parametres(request):
-    return render(request, "dashboard/parametres.html")
-
+    context = {
+        "page_title": "Paramètres de la plateforme",
+    }
+    return render(request,"dashboard/parametres.html",
+    context,
+    )
 @staff_member_required
 def document_create(request):
     if request.method == "POST":
@@ -166,4 +171,17 @@ def document_delete(request, pk):
         {
             "document": document,
         }
+    )
+@staff_member_required
+def commentaires(request):
+
+    context = {
+        "nb_commentaires": Comment.objects.count(),
+        "derniers_commentaires": Comment.objects.order_by("-created_at")[:10],
+    }
+
+    return render(
+        request,
+        "dashboard/commentaires.html",
+        context,
     )

@@ -1,0 +1,27 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block title %}
+Détail du niveau
+{% endblock %}
+
+{% block page_title %}
+Détail du niveau
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-header bg-white">
+        <h4> <i class="bi bi-diagram-3-fill"></i> {{ niveau.nom }}</h4>
+    </div>
+    <div class="card-body">
+        <p><strong>Nom :</strong>{{ niveau.nom }}</p>
+        <p><strong>Description :</strong>{{ niveau.description }}</p>
+        <p><strong>Nombre de documents :</strong><span class="badge bg-success"> {{ niveau.document_set.count }}</span></p>
+        <hr>
+        <a href="{% url 'categories:niveau_update' niveau.pk %}"class="btn btn-warning"><i class="bi bi-pencil"></i>Modifier</a>
+        <a href="{% url 'categories:niveau_list' %}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i>Retour</a>
+    </div>
+</div>
+
+{% endblock %}

@@ -12,6 +12,8 @@ from django.views.generic import (
     View,
 )
 
+from resources.models import Document, Comment
+from categories.models import Matiere, Niveau
 from .forms import UserForm, UserUpdateForm
 
 # Create your views here.
@@ -77,14 +79,21 @@ class UserDashboardView(LoginRequiredMixin, AdminRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        context["total_users"] = User.objects.count()
-        context["total_admins"] = User.objects.filter(role="admin").count()
-        context["total_teachers"] = User.objects.filter(role="teacher").count()
-        context["total_students"] = User.objects.filter(role="student").count()
-
-        context["recent_users"] = (
-            User.objects.order_by("-date_joined")[:5]
+        derniers_utilisateurs = User.objects.order_by("-date_joined")[:8]
+        derniers_documents = (
+            Document.objects
+            .select_related("auteur", "matiere", "niveau")
+            .order_by("-created_at")[:10]
         )
+        context["nb_users"] = User.objects.count()
+        context["nb_documents"] = Document.objects.count()
+        context["nb_comments"] = Comment.objects.count()
+        context["nb_teachers"] = User.objects.filter(role="teacher").count()
+        context["nb_students"] = User.objects.filter(role="student").count()
+        context["nb_matieres"] = Matiere.objects.count()
+        context["nb_niveaux"] = Niveau.objects.count()
+
+        context["derniers_utilisateurs"] = derniers_utilisateurs
+        context["derniers_documents"] = derniers_documents
 
         return context

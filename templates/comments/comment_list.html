@@ -1,0 +1,89 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block title %}Gestion des commentaires{% endblock %}
+
+{% block page_title %}
+Gestion des commentaires
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-header bg-white">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h4 class="mb-0"><i class="bi bi-chat-dots-fill text-primary"></i>Liste des commentaires</h4>
+            </div>
+            <div class="col-md-6">
+                <form method="get">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input type="text" name="q" class="form-control" placeholder="Rechercher..." value="{{ recherche }}" >
+                        <button class="btn btn-primary">  Rechercher</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="mb-3">
+            <span class="badge bg-primary fs-6"> {{ nb_comments }} commentaire(s)</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th>Auteur</th>
+                    <th>Document</th>
+                    <th>Commentaire</th>
+                    <th>Date</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for comment in comments %}
+                <tr>
+                    <td> <i class="bi bi-person-circle"></i> {{ comment.user.username }}</td>
+                    <td><span class="badge bg-info text-dark"> {{ comment.document.title }}</span></td>
+                    <td> {{ comment.content|truncatechars:60 }}</td>
+                    <td> {{ comment.created_at|date:"d/m/Y H:i" }}</td>
+                    <td class="text-center">
+                        <a href="{% url 'comments:comment_detail' comment.pk %}"  class="btn btn-sm btn-primary">   <i class="bi bi-eye"></i></a>
+                        <a href="{% url 'comments:comment_delete' comment.pk %}" class="btn btn-sm btn-danger">  <i class="bi bi-trash"></i></a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted">  Aucun commentaire trouvé. </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if is_paginated %}
+        <nav>
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ recherche }}">Précédent
+                    </a>
+                </li>
+                {% endif %}
+
+                {% for num in paginator.page_range %}
+                <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}&q={{ recherche }}"> {{ num }} </a>
+                </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link"  href="?page={{ page_obj.next_page_number }}&q={{ recherche }}">Suivant </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block title %}
+Supprimer une matière
+{% endblock %}
+
+{% block page_title %}
+Confirmation
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-body">
+        <h4 class="text-danger"><i class="bi bi-exclamation-triangle-fill"></i>Suppression</h4>
+        <p>Voulez-vous vraiment supprimer<strong>{{ object.nom }}</strong> ?</p>
+        <button class="btn btn-danger"><i class="bi bi-trash"></i>Supprimer</button>
+        <a href="{% url 'categories:matiere_list' %}"class="btn btn-secondary"><i class="bi bi-x-circle"></i>Annuler</a>
+    </div>
+</div>
+
+{% endblock %}

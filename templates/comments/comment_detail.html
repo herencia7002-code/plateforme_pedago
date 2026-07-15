@@ -1,0 +1,28 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block title %}Détail du commentaire{% endblock %}
+
+{% block page_title %}
+Détail du commentaire
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-header bg-white">
+        <h4><i class="bi bi-chat-left-text-fill text-primary"></i>Commentaire </h4>
+    </div>
+    <div class="card-body">
+        <p><strong>Auteur :</strong>{{ comment.user.username }}</p>
+        <p><strong>Document :</strong>{{ comment.document.title }}</p>
+        <p><strong>Date :</strong>{{ comment.created_at|date:"d/m/Y H:i" }}</p>
+        <hr>
+        <h5>Contenu</h5>
+        <div class="alert alert-light">
+            {{ comment.content }}
+        </div>
+        <a href="{% url 'comments:comment_list' %}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Retour </a>
+    </div>
+</div>
+
+{% endblock %}

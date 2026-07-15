@@ -13,4 +13,5 @@ urlpatterns = [
     path("documents/ajouter/", views.document_create, name="dashboard_document_create"),
     path("documents/<int:pk>/modifier/", views.document_update, name="dashboard_document_update"),
     path("documents/<int:pk>/supprimer/", views.document_delete, name="dashboard_document_delete"),
+    
 ]
