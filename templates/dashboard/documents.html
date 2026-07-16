@@ -1,6 +1,6 @@
 {% extends "dashboard/base_dashboard.html" %}
 
-{% block title %}Documents{% endblock %}
+{% block title %}Gestion des documents{% endblock %}
 
 {% block page_title %}
 Gestion des documents
@@ -8,101 +8,124 @@ Gestion des documents
 
 {% block content %}
 
-<div class="card shadow-sm border-0 rounded-4">
-    <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="mb-0"> Documents</h3>
-            <a href="{% url 'dashboard_document_create' %}" class="btn btn-primary"> 
-                <i class="bi bi-plus-circle"></i>
-                + Ajouter un document </a>
-        </div>
-        <form method="get">
-            <div class="row g-3 mb-4">
-                <div class="col-md-5">
-                    <div class="input-group">
-                        <span class="input-group-text">
-                        <i class="bi bi-search"></i>
-                        </span>
-                    <input type="text" class="form-control" name="q" placeholder="Rechercher un document..." value="{{ request.GET.q }}">
+<div class="container-fluid">
+
+    <!-- Statistiques -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <small class="text-muted">Documents</small>
+                        <h2 class="fw-bold">{{ documents.paginator.count }}</h2>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <select class="form-select" name="matiere">
-                        <option value="all">Toutes les matières</option>
-                        {% for matiere in matieres %}
-                        <option value="{{ matiere.id }}"{% if request.GET.matiere == matiere.id|stringformat:"s" %} selected {% endif %}>
-                        {{ matiere }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <select class="form-select" name="niveau">
-                        <option value="all">Tous les niveaux</option>
-                        {% for niveau in niveaux %}
-                        <option value="{{ niveau.id }}"{% if request.GET.niveau == niveau.id|stringformat:"s" %} selected {% endif %}>
-                            {{ niveau }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="col-md-1">
-                    <button class="btn btn-primary w-100"> OK </button>
+                    <i class="bi bi-file-earmark-text-fill text-primary fs-1"></i>
                 </div>
             </div>
-        </form>
-        <div class="table-responsive">
-            <table class="table table-hover align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>Titre</th>
-                        <th>Auteur</th>
-                        <th>Matière</th>
-                        <th>Niveau</th>
-                        <th>Date</th>
-                        <th>Téléchargements</th>
-                        <th>État</th>
-                        <th class="text-center"> Actions
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for document in documents %}
-                    <tr>
-                        <td>
-                            <strong> {{ document.title }}  </strong>
-                        </td>
-                        <td> {{ document.auteur }} </td>
-                        <td> {{ document.matiere }}  </td>
-                        <td>{{ document.niveau }} </td>
-                        <td> {{ document.created_at|date:"d/m/Y" }}  </td>
-                        <td> {{ document.nb_telechargements|default:"0" }} </td>
-                       <td>
-                        {% if document.status == "approved" %}
-                        <span class="badge bg-success"> Validé </span>
-                        {% elif document.status == "pending" %}
-                        <span class="badge bg-warning text-dark"> En attente </span>
+        </div>
+    </div>
+
+    <!-- Actions rapides -->
+    <div class="card shadow-sm border-0 rounded-4 mb-4">
+        <div class="card-header bg-white">
+            <h5><i class="bi bi-lightning-fill"></i> Actions rapides</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <a href="{% url 'dashboard_document_create' %}" class="btn btn-primary w-100 py-3">  <i class="bi bi-plus-circle"></i><br>
+                          Ajouter un document
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="{% url 'resources:document_list' %}" class="btn btn-success w-100 py-3"> <i class="bi bi-list-ul"></i><br>
+                        Liste des documents
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Derniers documents -->
+    <div class="card shadow-sm border-0 rounded-4">
+
+        <div class="card-header bg-white d-flex justify-content-between">
+            <h5> <i class="bi bi-clock-history"></i>  Derniers documents </h5>
+            <a href="{% url 'resources:document_list' %}" class="btn btn-outline-primary btn-sm">
+                Voir tout
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Matière</th>
+                            <th>Niveau</th>
+                            <th>Auteur</th>
+                            <th>Date</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for document in documents %}
+                        <tr>
+                            <td>{{ document.title }}</td>
+                            <td>{{ document.matiere.nom }}</td>
+                            <td>{{ document.niveau.nom }}</td>
+                            <td>{{ document.auteur.username }}</td>
+                            <td>{{ document.created_at|date:"d/m/Y" }}</td>
+                            <td class="text-end">
+                                <a href="{% url 'dashboard_document_update' document.pk %}" class="btn btn-warning btn-sm">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <a href="{% url 'dashboard_document_delete' document.pk %}" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center"> Aucun document disponible. </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            {% if page_obj.has_other_pages %}
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}"> Précédent </a>
+                    </li>
+                    {% endif %}
+                    {% for num in page_obj.paginator.page_range %}
+
+                        {% if page_obj.number == num %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ num }}</span>
+                            </li>
                         {% else %}
-                        <span class="badge bg-danger"> Refusé </span>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}"> {{ num }} </a>
+                            </li>
                         {% endif %}
-                        </td>
-                        <td class="text-center">
-                            <a href="{% url 'document_detail' document.pk %}" class="btn btn-sm btn-outline-primary" title="Voir">
-                             <i class="bi bi-eye"></i> </a>
-                            <a href="{% url 'dashboard_document_update' document.pk %}" class="btn btn-sm btn-outline-warning" title="Modifier">
-                             <i class="bi bi-pencil-square"></i></a>
-                            <a href="{% url 'dashboard_document_delete' document.pk %}" class="btn btn-sm btn-outline-danger" title="Supprimer">
-                            <i class="bi bi-trash"></i> </a>
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="8" class="text-center"> Aucun document. </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">  Suivant </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
         </div>
     </div>
 </div>
+
 {% endblock %}

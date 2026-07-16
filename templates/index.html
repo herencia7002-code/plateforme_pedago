@@ -53,7 +53,7 @@
                 <p><strong>Date :</strong>{{ document.created_at|date:"d/m/Y" }} </p>
             </div>
             <div class="document-actions">
-                <a href="{% url 'document_detail' document.pk %}" class="btn-document"> Voir le document</a>
+                <a href="{% url 'resources:document_detail' document.pk %}" class="btn-document"> Voir le document</a>
             </div>
         </div>
         {% empty %}

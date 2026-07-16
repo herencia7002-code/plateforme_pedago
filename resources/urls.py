@@ -8,6 +8,7 @@ from .views import (
     download_document,
     document_detail,
 )
+app_name = "resources"
 
 urlpatterns = [
     path('', document_list, name='document_list'),
@@ -17,5 +18,6 @@ urlpatterns = [
     path('documents/<int:pk>/comment/', add_comment, name='add_comment'),
     path('documents/<int:pk>/download/',download_document,name="download_document",),
     path('documents/<int:pk>/', document_detail, name="document_detail"),
+    
 ]
 

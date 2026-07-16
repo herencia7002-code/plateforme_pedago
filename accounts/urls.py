@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib.auth.views import LogoutView
 
 from .views import (
     UserListView,
@@ -17,4 +18,5 @@ urlpatterns = [
     path( "users/<int:pk>/delete/", UserDeleteView.as_view(),name="user_delete"),
     path( "users/<int:pk>/toggle/", ToggleUserStatusView.as_view(), name="user_toggle"),
     path( "utilisateurs/",UserDashboardView.as_view(), name="user_dashboard",),
+    path( "logout/", LogoutView.as_view(next_page="index"), name="logout",),
 ]

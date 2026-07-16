@@ -13,7 +13,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <small class="text-muted">Niveaux enregistrés</small>
-                        <h2 class="fw-bold text-primary">{{ nb_niveaux }}</h2>
+                        <h2 class="fw-bold">{{ nb_niveaux }}</h2>
                     </div>
                     <i class="bi bi-diagram-3-fill fs-1 text-primary"></i>
                 </div>
@@ -54,14 +54,12 @@
                 <thead>
                     <tr>
                         <th>Nom</th>
-                        <th>Ordre</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for niveau in derniers_niveaux %}
                     <tr>
-                        <td><span class="badge bg-primary"> {{ niveau.nom }}</span></td>
-                        <td>{{ niveau.ordre }}</td>
+                        <td> {{ niveau.nom }}</td>
                     </tr>
                 {% empty %}
                     <tr>

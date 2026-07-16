@@ -70,29 +70,45 @@ def documents(request):
 
 @staff_member_required
 def utilisateurs(request):
-    utilisateurs = User.objects.order_by("-date_joined")
+    recent_utilisateurs = User.objects.order_by("-date_joined")[:10]
+
+    context = {
+        "total_utilisateurs": User.objects.count(),
+        "recent_utilisateurs": recent_utilisateurs,
+    }
+
     return render(
         request,
         "dashboard/utilisateurs.html",
-        {"utilisateurs": utilisateurs},
+        context,
     )
 
 @staff_member_required
 def matieres(request):
-    matieres = Matiere.objects.all()
+    recent_matieres = Matiere.objects.order_by("-id")[:10]
+
+    context = {
+        "total_matieres": Matiere.objects.count(),
+        "recent_matieres": recent_matieres,
+    }
+
     return render(
         request,
         "dashboard/matieres.html",
-        {"matieres": matieres},
+        context,
     )
 
 @staff_member_required
 def niveaux(request):
-    niveaux = Niveau.objects.all()
+    context = {
+        "nb_niveaux": Niveau.objects.count(),
+        "derniers_niveaux": Niveau.objects.order_by("-id")[:10],
+    }
+
     return render(
         request,
         "dashboard/niveaux.html",
-        {"niveaux": niveaux},
+        context,
     )
 
 @staff_member_required
@@ -163,7 +179,7 @@ def document_delete(request, pk):
 
     if request.method == "POST":
         document.delete()
-        return redirect("documents")
+        return redirect("dashboard_documents")
 
     return render(
         request,
