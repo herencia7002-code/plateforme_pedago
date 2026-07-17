@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.forms import UserCreationForm
+from accounts.forms import UserRegisterForm
 from django.shortcuts import redirect, render
 from resources.models import Document
 
@@ -20,8 +21,21 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class EmailAuthenticationForm(forms.Form):
-    email = forms.EmailField(label="Email")
-    password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
+    email = forms.EmailField(
+        label="Adresse e-mail",
+        widget=forms.EmailInput(attrs={
+            "class": "form-control",
+            "placeholder": "Entrez votre adresse e-mail"
+        })
+    )
+
+    password = forms.CharField(
+        label="Mot de passe",
+        widget=forms.PasswordInput(attrs={
+            "class": "form-control",
+            "placeholder": "Entrez votre mot de passe"
+        })
+    )
 
 def home(request):
     documents = Document.objects.select_related("auteur", "matiere", "niveau"
@@ -31,17 +45,16 @@ def home(request):
 
 
 def inscription(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+    if request.method == "POST":
+        form = UserRegisterForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('profil')
+            return redirect("profil")
     else:
-        form = CustomUserCreationForm()
+        form = UserRegisterForm()
 
-    return render(request, 'inscription.html', {'form': form})
-
+    return render(request, "inscription.html", {"form": form})
 
 def connexion(request):
     if request.method == 'POST':

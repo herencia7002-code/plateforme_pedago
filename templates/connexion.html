@@ -1,41 +1,56 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'connexion.css' %}">
+    <title>Connexion - Plateforme pédagogique</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/connexion.css' %}">
+    {% endblock %}
 </head>
 <body>
-    <div class="form-card">
-        <h1>Connexion</h1>
-        <p class="sub">Connectez-vous et accédez à votre espace personnel</p>
-        {% if form.non_field_errors %}
-            <div class="error">
-                {{ form.non_field_errors }}
-            </div>
+<div class="card login-card">
+    <div class="card-body p-5">
+        <div class="text-center mb-4">
+            <i class="bi bi-mortarboard-fill logo"></i>
+            <h2 class="fw-bold mt-3"> Connexion</h2>
+            <p class="text-muted"> Accédez à votre espace personnel. </p>
+        </div>
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            Nom d'utilisateur ou mot de passe incorrect.
+        </div>
         {% endif %}
         <form method="post">
             {% csrf_token %}
-            <div class="field">
-                <label for="id_email">Adresse e-mail</label>
+            <div class="mb-3">
+                <label class="form-label">{{ form.email.label }}</label>
                 {{ form.email }}
                 {{ form.email.errors }}
             </div>
 
-            <div class="field">
-                <label for="id_password">Mot de passe</label>
+            <div class="mb-4">
+                <label class="form-label">{{ form.password.label }}</label>
                 {{ form.password }}
                 {{ form.password.errors }}
-            </div>
-
-            <button type="submit" class="submit">Se connecter</button>
+    </div>
+            <button class="btn btn-primary w-100">
+                <i class="bi bi-box-arrow-in-right"></i>
+                Se connecter
+            </button>
         </form>
-
-        <div class="auth-footer">
-            Pas de compte ? <a href="{% url 'inscription' %}">S'inscrire</a>
+        <hr class="my-4">
+        <div class="text-center">
+            <p class="mb-2">  Vous n'avez pas encore de compte ? </p>
+            <a href="{% url 'inscription' %}">  Créer un compte </a>
         </div>
     </div>
+</div>
+
 </body>
 </html>

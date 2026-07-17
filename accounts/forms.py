@@ -33,3 +33,30 @@ class UserUpdateForm(forms.ModelForm):
             "profile_photo",
             "is_active",
         ]
+class UserRegisterForm(UserCreationForm):
+
+    class Meta:
+        model = User
+        fields = [
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "school",
+            "role",
+            "profile_photo",
+            "bio",
+            "password1",
+            "password2",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.widget.attrs["class"] = "form-control"
+
+        self.fields["role"].widget.attrs["class"] = "form-select"
+
+
+        
