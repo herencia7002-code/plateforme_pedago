@@ -56,6 +56,7 @@ def inscription(request):
 
     return render(request, "inscription.html", {"form": form})
 
+
 def connexion(request):
     if request.method == 'POST':
         form = EmailAuthenticationForm(request.POST)

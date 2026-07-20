@@ -4,7 +4,6 @@ from django.db import models
 # Create your models here.
 # accounts/models.py
 
-
 class User(AbstractUser):
     ROLE_CHOICES = [
         ('teacher', 'Enseignant'),

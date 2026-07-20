@@ -8,6 +8,7 @@ from .views import (
     UserDeleteView,
     ToggleUserStatusView,
     UserDashboardView,
+    user_dashboard,
 )
 
 app_name = "accounts"
@@ -17,6 +18,7 @@ urlpatterns = [
     path( "users/<int:pk>/edit/", UserUpdateView.as_view(), name="user_edit" ),
     path( "users/<int:pk>/delete/", UserDeleteView.as_view(),name="user_delete"),
     path( "users/<int:pk>/toggle/", ToggleUserStatusView.as_view(), name="user_toggle"),
-    path( "utilisateurs/",UserDashboardView.as_view(), name="user_dashboard",),
+    path( "utilisateurs/",UserDashboardView.as_view(), name="admin_user_dashboard",),
     path( "logout/", LogoutView.as_view(next_page="index"), name="logout",),
+    path( "dashboard/", user_dashboard, name="user_dashboard",),
 ]

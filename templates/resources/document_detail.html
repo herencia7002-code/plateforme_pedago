@@ -24,9 +24,9 @@
                     </div>
                 </div>
                 <div>
-                    <a href="{% url 'download_document' document.id %}" class="btn btn-success btn-lg"> 
+                    <a href="{% url 'resources:download_document' document.id %}" class="btn btn-success btn-lg"> 
                          <i class="bi bi-download"></i>
-                        Télécharger  </a>
+                    </a>
                 </div>
             </div>
             <hr> 
@@ -44,10 +44,6 @@
                 </div>
             </div>
             <hr>
-            <div class="d-flex align-items-center gap-3 flex-wrap">
-                <strong>Note moyenne :</strong>
-                <span class="badge bg-warning text-dark fs-6">{{ document.average_rating|floatformat:1 }}/5</span>
-            </div>
         </div>
     </div>
     <!-- ========================= -->
@@ -113,7 +109,7 @@
             <h3 class="mb-4">   Ajouter un commentaire</h3>
             {% if user.is_authenticated %}
                 <form method="post"
-                      action="{% url 'add_comment' document.id %}">
+                      action="{% url 'resources:add_comment' document.id %}">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <button class="btn btn-primary">  Publier </button>

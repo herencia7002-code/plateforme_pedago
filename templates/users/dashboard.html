@@ -1,0 +1,126 @@
+{% extends "accounts/base_user.html" %}
+
+{% block title %}
+Tableau de bord
+{% endblock %}
+
+{% block page_title %}
+Tableau de bord
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard_user.css' %}">
+{% endblock %}
+{% block content %}
+<div class="welcome-card">
+    <div>
+        <h2>Bonjour {{ user.first_name|default:user.username }} </h2>
+        <p> Bienvenue sur votre espace personnel. Retrouvez ici toutes vos activités et vos ressources. </p>
+    </div>
+</div>
+<div class="row g-4 mt-2">
+    {% if user.role == "teacher" %}
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <i class="bi bi-file-earmark-text"></i>
+            <div>
+                <h3>{{ nb_publications|default:"0" }}</h3>
+                <span>Documents publiés</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <i class="bi bi-download"></i>
+            <div>
+                <h3>{{ nb_telechargements|default:"0" }}</h3>
+                <span>Téléchargements</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <i class="bi bi-chat-left-text"></i>
+            <div>
+                <h3>{{ nb_commentaires|default:"0" }}</h3>
+                <span>Commentaires</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <i class="bi bi-graph-up-arrow"></i>
+            <div>
+                <h3>{{ nb_vues|default:"0" }}</h3>
+                <span>Consultations</span>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <i class="bi bi-download"></i>
+            <div>
+                <h3>{{ nb_telechargements|default:"0" }}</h3>
+                <span>Mes téléchargements</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <i class="bi bi-book"></i>
+            <div>
+                <h3>{{ nb_consultations|default:"0" }}</h3>
+                <span>Documents consultés</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <i class="bi bi-chat-dots"></i>
+            <div>
+                <h3>{{ nb_commentaires|default:"0" }}</h3>
+                <span>Commentaires</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <i class="bi bi-bookmark-heart"></i>
+            <div>
+                <h3>{{ nb_favoris|default:"0" }}</h3>
+                <span>Favoris</span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+<div class="row mt-5">
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">  <i class="bi bi-clock-history"></i> Activité récente </h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">   Aucune activité récente. </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0"> <i class="bi bi-lightbulb"></i>  Accès rapide </h5>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="{% url 'resources:document_list' %}" class="list-group-item">  Consulter les documents </a>
+                {% if user.role == "teacher" %}
+                <a href="{% url 'resources:document_create' %}" class="list-group-item"> Publier un document</a>
+                {% endif %}
+                <a href="#"  class="list-group-item"> Modifier mon profil</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

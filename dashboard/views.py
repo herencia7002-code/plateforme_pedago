@@ -10,6 +10,9 @@ from django.db.models import Q
 
 @staff_member_required
 def dashboard(request):
+    if request.user.role != "admin":
+        return HttpResponseForbidden("Accès interdit")
+        
     derniers_utilisateurs = (
     User.objects
     .order_by("-date_joined")[:8]

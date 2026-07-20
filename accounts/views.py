@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from django.views.generic import (
     ListView,
@@ -84,10 +85,25 @@ class UserDashboardView(LoginRequiredMixin, AdminRequiredMixin, TemplateView):
         context["total_admins"] = User.objects.filter(role="admin").count()
         context["total_teachers"] = User.objects.filter(role="teacher").count()
         context["total_students"] = User.objects.filter(role="student").count()
-
         context["recent_users"] = User.objects.order_by("-date_joined")[:10]
 
         return context
 def profile(request):
     return render(request, "accounts/profile.html")
 
+@login_required
+def user_dashboard(request):
+
+    context = {
+        "nb_publications": 0,
+        "nb_telechargements": 0,
+        "nb_commentaires": 0,
+        "nb_vues": 0,
+        "nb_consultations": 0,
+    }
+
+    return render(
+        request,
+        "accounts/dashboard.html",
+        context
+    )
