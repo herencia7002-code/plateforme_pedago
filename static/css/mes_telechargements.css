@@ -1,0 +1,20 @@
+.empty-state{
+    padding:60px 20px;
+    text-align:center;
+}
+
+.empty-state i{
+    font-size:70px;
+    color:#0d6efd;
+    margin-bottom:20px;
+}
+.empty-state h4{
+    font-weight:700;
+}
+.empty-state p{
+    color:#6c757d;
+    margin:20px 0;
+}
+.table th{
+    font-weight:600;
+}

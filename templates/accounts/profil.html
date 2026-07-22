@@ -1,0 +1,73 @@
+{% extends "accounts/base_user.html" %}
+{% load static %}
+
+{% block title %}
+Mon profil
+{% endblock %}
+
+{% block page_title %}
+Mon profil
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-body text-center">
+                {% if user.profile_photo %}
+                    <img src="{{ user.profile_photo.url }}" class="profile-photo">
+                {% else %}
+                    <i class="bi bi-person-circle profile-icon"></i>
+                {% endif %}
+                <h4 class="mt-3"> {{ user.get_full_name|default:user.username }} </h4>
+                <span class="badge bg-primary">  {{ user.get_role_display }} </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">  Informations personnelles </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label>Nom d'utilisateur</label>
+                        <input class="form-control" value="{{ user.username }}" readonly>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Email</label>
+                        <input class="form-control" value="{{ user.email }}" readonly>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Nom</label>
+                        <input class="form-control" value="{{ user.last_name }}" readonly>
+                    </div>
+                    <div class="col-md-6 mb-3">
+
+                        <label>Prénom</label>
+                        <input class="form-control" value="{{ user.first_name }}" readonly>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Établissement</label>
+                        <input class="form-control" value="{{ user.school }}" readonly>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Rôle</label>
+                        <input class="form-control" value="{{ user.get_role_display }}"  readonly>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label>Biographie</label>
+                    <textarea class="form-control" rows="5" readonly>{{ user.bio }}</textarea>
+                </div>
+                <a href="#"  class="btn btn-primary"> <i class="bi bi-pencil-square"></i> Modifier mon profil </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

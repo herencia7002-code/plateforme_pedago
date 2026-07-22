@@ -1,0 +1,55 @@
+{% extends "accounts/base_user.html" %}
+{% load static %}
+
+{% block title %}Mes téléchargements{% endblock %}
+
+{% block page_title %}
+Mes téléchargements
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/mes_telechargements.css' %}">
+{% endblock %}
+{% block content %}
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-header bg-white">
+        <h5 class="mb-0"> <i class="bi bi-download"></i> Historique des téléchargements</h5>
+    </div>
+    <div class="card-body">
+        {% if downloads %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Document</th>
+                        <th>Matière</th>
+                        <th>Niveau</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for download in downloads %}
+                    <tr>
+                        <td>{{ download.document.title }}</td>
+                        <td>{{ download.document.matiere }}</td>
+                        <td>{{ download.document.niveau }}</td>
+                        <td>{{ download.downloaded_at }}</td>
+                        <td> <a href="{% url 'resources:document_detail' download.document.pk %}" class="btn btn-sm btn-outline-primary"> Voir </a> </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="bi bi-cloud-download"></i>
+            <h4>Aucun téléchargement</h4>
+            <p> Vous n'avez téléchargé aucun document pour le moment.</p>
+            <a href="{% url 'resources:document_list' %}" class="btn btn-primary"> Parcourir les documents </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

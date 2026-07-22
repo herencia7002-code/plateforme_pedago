@@ -1,0 +1,13 @@
+.card{
+    margin-bottom:20px;
+}
+.card-header{
+    font-weight:600;
+}
+.card-body p{
+    color:#6c757d;
+    margin-bottom:20px;
+}
+.btn{
+    min-width:220px;
+}

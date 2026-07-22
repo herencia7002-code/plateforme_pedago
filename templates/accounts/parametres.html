@@ -1,0 +1,64 @@
+{% extends "accounts/base_user.html" %}
+{% load static %}
+
+{% block title %}Paramètres{% endblock %}
+
+{% block page_title %}Paramètres du compte{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/parametres.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-header bg-white">
+                <h5>Informations personnelles</h5>
+            </div>
+            <div class="card-body">
+                <p>  Modifier vos informations personnelles. </p>
+                <a href="#"  class="btn btn-primary">  Modifier mon profil </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-header bg-white">
+                <h5>Mot de passe</h5>
+            </div>
+            <div class="card-body">
+                <p> Modifier votre mot de passe. </p>
+                <a href="#" class="btn btn-warning"> Changer le mot de passe </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-header bg-white">
+                <h5>Photo de profil</h5>
+            </div>
+            <div class="card-body">
+                <p> Mettre à jour votre photo. </p>
+                <a href="#" class="btn btn-success"> Modifier la photo </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-header bg-white">
+                <h5>Compte</h5>
+            </div>
+            <div class="card-body">
+                <p> Se déconnecter de la plateforme. </p>
+                <a href="{% url 'accounts:logout' %}" class="btn btn-danger">Déconnexion </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

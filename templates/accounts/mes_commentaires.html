@@ -1,0 +1,37 @@
+{% extends "accounts/base_user.html" %}
+{% load static %}
+
+{% block title %}Mes commentaires{% endblock %}
+{% block page_title %}Mes commentaires{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/mes_commentaires.css' %}">
+{% endblock %}
+{% block content %}
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-header bg-white">
+        <h5 class="mb-0"> <i class="bi bi-chat-left-text"></i>  Mes commentaires </h5>
+    </div>
+    <div class="card-body">
+        {% if commentaires %}
+            {% for commentaire in commentaires %}
+                <div class="comment-card">
+                    <div class="comment-header">
+                        <h6> <a href="{% url 'resources:document_detail' commentaire.document.pk %}"> {{ commentaire.document.title }} </a> </h6>
+                        <small> {{ commentaire.created_at|date:"d/m/Y H:i" }} </small>
+                    </div>
+                    <p> {{ commentaire.contenu }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <i class="bi bi-chat-square-text"></i>
+                <h4>Aucun commentaire</h4>
+                <p> Vous n'avez publié aucun commentaire. </p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

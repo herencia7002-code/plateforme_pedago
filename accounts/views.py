@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 from django.views.generic import TemplateView
 from django.views.generic import (
     ListView,
@@ -88,8 +89,10 @@ class UserDashboardView(LoginRequiredMixin, AdminRequiredMixin, TemplateView):
         context["recent_users"] = User.objects.order_by("-date_joined")[:10]
 
         return context
-def profile(request):
-    return render(request, "accounts/profile.html")
+    
+@login_required
+def profil(request):
+    return render(request, "users/profil.html", {"user": request.user })
 
 @login_required
 def user_dashboard(request):
@@ -101,9 +104,39 @@ def user_dashboard(request):
         "nb_vues": 0,
         "nb_consultations": 0,
     }
+    return render( request, "accounts/dashboard.html", context)
 
-    return render(
-        request,
-        "accounts/dashboard.html",
-        context
+@login_required
+def downloads(request):
+    return render( request, "accounts/mes_telechargements.html", { "downloads": []} )
+
+@login_required
+def comments(request):
+    commentaires = (
+        Comment.objects
+        .filter(auteur=request.user)
+        .select_related("document")
+        .order_by("-created_at")
+    )
+    return render(request, "accounts/mes_commentaires.html",{ "commentaires": commentaires, },
+    )
+
+@login_required
+def publications(request):
+    if request.user.role != "teacher":
+        return HttpResponseForbidden(
+            "Cette page est réservée aux enseignants."
+        )
+    documents = (
+        Document.objects
+        .filter(auteur=request.user)
+        .select_related("matiere", "niveau")
+        .order_by("-created_at")
+    )
+    return render( request, "accounts/mes_publications.html", { "documents": documents,},
+    )
+
+@login_required
+def parametres(request):
+    return render(request,"accounts/parametres.html", { "user": request.user,},
     )

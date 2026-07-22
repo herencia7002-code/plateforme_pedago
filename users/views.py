@@ -43,6 +43,15 @@ def home(request):
     return render(request,"index.html",{    "documents": documents}
     )
 
+def redirect_after_login(user):
+    """
+    Redirige l'utilisateur selon son rôle.
+    """
+    if user.role == "admin":
+        return redirect("dashboard")
+
+    return redirect("accounts:user_dashboard")
+
 
 def inscription(request):
     if request.method == "POST":
@@ -50,7 +59,7 @@ def inscription(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("profil")
+            return redirect_after_login(user)
     else:
         form = UserRegisterForm()
 
@@ -67,7 +76,7 @@ def connexion(request):
             user = user_model.objects.filter(email__iexact=email).first()
             if user is not None and user.check_password(password):
                 login(request, user)
-                return redirect('profil')
+                return redirect_after_login(user)
             form.add_error(None, 'Email ou mot de passe incorrect.')
     else:
         form = EmailAuthenticationForm()
