@@ -1,4 +1,4 @@
-{% extends "dashboard/base_dashboard.html" %}
+{% extends "accounts/base_user.html" %}
 {% block title %}Liste des documents{% endblock %}
 
 {% block page_title %}
@@ -11,7 +11,7 @@ Liste des documents
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="mb-0"><i class="bi bi-file-earmark-text-fill text-primary"></i>Liste des documents</h4>
-            <a href="{% url 'resources:document_create' %}" class="btn btn-primary"> 
+            <a href="{% url 'dashboard_document_create' %}" class="btn btn-primary"> 
                 <i class="bi bi-plus-circle"></i>
                 + Ajouter un document </a>
         </div>
@@ -75,7 +75,7 @@ Liste des documents
                         <td> {{ document.matiere }}  </td>
                         <td>{{ document.niveau }} </td>
                         <td> {{ document.created_at|date:"d/m/Y" }}  </td>
-                        <td> {{ document.nb_telechargements}} </td>
+                        <td> {{ document.nb_telechargements|default:"0" }} </td>
                        <td>
                         {% if document.status == "approved" %}
                         <span class="badge bg-success"> Validé </span>
@@ -88,9 +88,9 @@ Liste des documents
                         <td class="text-center">
                             <a href="{% url 'resources:document_detail' document.pk %}" class="btn btn-sm btn-outline-primary" title="Voir">
                              <i class="bi bi-eye"></i> </a>
-                            <a href="{% url 'resources:document_update' document.pk %}" class="btn btn-sm btn-outline-warning" title="Modifier">
+                            <a href="{% url 'dashboard_document_update' document.pk %}" class="btn btn-sm btn-outline-warning" title="Modifier">
                              <i class="bi bi-pencil-square"></i></a>
-                            <a href="{% url 'resources:document_delete' document.pk %}" class="btn btn-sm btn-outline-danger" title="Supprimer">
+                            <a href="{% url 'dashboard_document_delete' document.pk %}" class="btn btn-sm btn-outline-danger" title="Supprimer">
                             <i class="bi bi-trash"></i> </a>
                         </td>
                     </tr>

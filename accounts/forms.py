@@ -7,48 +7,18 @@ class UserForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = [
-            "first_name",
-            "last_name",
-            "username",
-            "email",
-            "role",
-            "school",
-            "bio",
-            "profile_photo",
-        ]
+        fields = ["first_name", "last_name","username","email","role","school","bio","profile_photo", ]
 
 class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = [
-            "first_name",
-            "last_name",
-            "username",
-            "email",
-            "role",
-            "school",
-            "bio",
-            "profile_photo",
-            "is_active",
-        ]
+        fields = ["first_name","last_name","username","email","role","school","bio","profile_photo","is_active", ]
 class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = [
-            "username",
-            "first_name",
-            "last_name",
-            "email",
-            "school",
-            "role",
-            "profile_photo",
-            "bio",
-            "password1",
-            "password2",
-        ]
+        fields = ["username","first_name","last_name","email","school","role","profile_photo","bio","password1","password2",]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -57,6 +27,4 @@ class UserRegisterForm(UserCreationForm):
             field.widget.attrs["class"] = "form-control"
 
         self.fields["role"].widget.attrs["class"] = "form-select"
-
-
         

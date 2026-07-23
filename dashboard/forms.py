@@ -6,15 +6,7 @@ class DocumentForm(forms.ModelForm):
 
     class Meta:
         model = Document
-        fields = [
-            "title",
-            "description",
-            "file",
-            "auteur",
-            "matiere",
-            "niveau",
-            "tags",
-        ]
+        fields = ['title', 'description', 'file', 'auteur','matiere','niveau',]
         widgets = {
             "title": forms.TextInput(attrs={
                 "class": "form-control"
@@ -33,9 +25,6 @@ class DocumentForm(forms.ModelForm):
                 "class": "form-select"
             }),
             "niveau": forms.Select(attrs={
-                "class": "form-select"
-            }),
-            "tags": forms.SelectMultiple(attrs={
                 "class": "form-select"
             }),
         }

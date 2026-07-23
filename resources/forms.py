@@ -5,11 +5,27 @@ from .models import Document, Comment
 class DocumentForm(forms.ModelForm):
     class Meta:
         model = Document
-        fields = ['title', 'description', 'file']
+        fields = ['title', 'description', 'file', 'matiere', 'niveau']
+
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'Titre du document'}),
-            'description': forms.Textarea(attrs={'class': 'textarea-field', 'placeholder': 'Description du document', 'rows': 4}),
+            'title': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 5
+            }),
+            'matiere': forms.Select(attrs={
+                'class': 'form-select'
+            }),
+            'niveau': forms.Select(attrs={
+                'class': 'form-select'
+            }),
+            'file': forms.ClearableFileInput(attrs={
+                'class': 'form-control'
+            }),
         }
+
 
 class CommentForm(forms.ModelForm):
 
@@ -18,8 +34,11 @@ class CommentForm(forms.ModelForm):
         fields = ['content']
 
         widgets = {
-            'content': forms.Textarea(attrs={
-                'rows':4,
-                'placeholder':"Écrivez votre commentaire..."
-            })
+            'content': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'rows': 4,
+                    'placeholder': 'Écrivez votre commentaire...'
+                }
+            )
         }

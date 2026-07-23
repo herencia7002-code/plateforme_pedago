@@ -7,6 +7,7 @@ from .views import (
     add_comment,
     download_document,
     document_detail,
+    user_document_list,
 )
 app_name = "resources"
 
@@ -16,8 +17,7 @@ urlpatterns = [
     path('modifier/<int:pk>/', document_update, name='document_update'),
     path('supprimer/<int:pk>/', document_delete, name='document_delete'),
     path('documents/<int:pk>/comment/', add_comment, name='add_comment'),
-    path('documents/<int:pk>/download/',download_document,name="download_document",),
-    path('documents/<int:pk>/', document_detail, name="document_detail"),
-    
+    path('documents/<int:pk>/download/',download_document,name="download_document"),
+    path('documents/<int:pk>/', document_detail, name='document_detail'),
+    path('mes-documents/', user_document_list, name='user_document_list'),
 ]
-

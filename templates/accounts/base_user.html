@@ -25,13 +25,13 @@
         </div>
         <nav class="sidebar-menu">
             <a href="{% url 'accounts:user_dashboard' %}"> <i class="bi bi-speedometer2"></i>  Tableau de bord</a>
-            <a href="{% url 'resources:document_list' %}"><i class="bi bi-journal-bookmark"></i>Documents </a>
+            <a href="{% url 'resources:user_document_list' %}"><i class="bi bi-journal-bookmark"></i>Documents </a>
             <a href="{% url 'accounts:downloads' %}"> <i class="bi bi-download"></i> Mes téléchargements</a>
             <a href="{% url 'accounts:comments' %}"><i class="bi bi-chat-left-text"></i> Mes commentaires</a>
             {% if user.role == "teacher" %}
             <hr>
             <a href="{% url 'resources:document_create' %}"> <i class="bi bi-cloud-upload"></i> Publier un document </a>
-             <a href="{% url 'accounts:mes_publications' %}"><i class="bi bi-file-earmark-text"></i>Mes publications </a>
+             <a href="{% url 'accounts:publications' %}"><i class="bi bi-file-earmark-text"></i>Mes publications </a>
             <a href="#"> <i class="bi bi-bar-chart"></i> Statistiques </a>
             {% endif %}
             <hr>

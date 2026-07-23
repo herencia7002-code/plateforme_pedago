@@ -34,7 +34,7 @@ class AdminRequiredMixin(UserPassesTestMixin):
 
 class UserListView(LoginRequiredMixin, AdminRequiredMixin, ListView):
     model = User
-    template_name = "accounts/user_list.html"
+    template_name = "users/user_list.html"
     context_object_name = "users"
     paginate_by = 10
     ordering = ["last_name", "first_name"]
@@ -44,23 +44,23 @@ class UserListView(LoginRequiredMixin, AdminRequiredMixin, ListView):
 class UserCreateView(LoginRequiredMixin, AdminRequiredMixin, CreateView):
     model = User
     form_class = UserForm
-    template_name = "accounts/user_form.html"
-    success_url = reverse_lazy("accounts:user_list")
+    template_name = "users/user_form.html"
+    success_url = reverse_lazy("users:user_list")
 
 # Modifier
 
 class UserUpdateView(LoginRequiredMixin, AdminRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
-    template_name = "accounts/user_form.html"
-    success_url = reverse_lazy("accounts:user_list")
+    template_name = "users/user_form.html"
+    success_url = reverse_lazy("users:user_list")
 
 # Supprimer
 
 class UserDeleteView(LoginRequiredMixin, AdminRequiredMixin, DeleteView):
     model = User
-    template_name = "accounts/user_confirm_delete.html"
-    success_url = reverse_lazy("accounts:user_list")
+    template_name = "users/user_confirm_delete.html"
+    success_url = reverse_lazy("users:user_list")
 
 # Activer/Désactiver
 
@@ -74,7 +74,7 @@ class ToggleUserStatusView(LoginRequiredMixin, AdminRequiredMixin, View):
             user.is_active = not user.is_active
             user.save()
 
-        return redirect("accounts:user_list")
+        return redirect("users:user_list")
 
 class UserDashboardView(LoginRequiredMixin, AdminRequiredMixin, TemplateView):
     template_name = "dashboard/utilisateurs.html"
@@ -92,7 +92,7 @@ class UserDashboardView(LoginRequiredMixin, AdminRequiredMixin, TemplateView):
     
 @login_required
 def profil(request):
-    return render(request, "users/profil.html", {"user": request.user })
+    return render(request, "accounts/profil.html", {"user": request.user })
 
 @login_required
 def user_dashboard(request):
