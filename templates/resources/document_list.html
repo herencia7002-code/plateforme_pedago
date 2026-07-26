@@ -78,11 +78,11 @@ Liste des documents
                         <td> {{ document.nb_telechargements}} </td>
                        <td>
                         {% if document.status == "approved" %}
-                        <span class="badge bg-success"> Validé </span>
+                        <span> Validé </span>
                         {% elif document.status == "pending" %}
-                        <span class="badge bg-warning text-dark"> En attente </span>
+                        <span> En attente </span>
                         {% else %}
-                        <span class="badge bg-danger"> Refusé </span>
+                        <span> Refusé </span>
                         {% endif %}
                         </td>
                         <td class="text-center">

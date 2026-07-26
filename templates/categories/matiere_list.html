@@ -11,7 +11,7 @@ Liste des matières
 <div class="card shadow-sm border-0 rounded-4">
     <div class="card-header bg-white">
         <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0"> <i class="bi bi-book-fill text-primary"></i> Gestion des matières</h4>
+            <h4 class="mb-0"> <i class="bi bi-book-fill"></i> Gestion des matières</h4>
             <a href="{% url 'categories:matiere_add' %}"class="btn btn-primary"><i class="bi bi-plus-circle"></i> Ajouter
             </a>
         </div>
@@ -41,8 +41,8 @@ Liste des matières
                 {% for matiere in matieres %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td> <span class="badge bg-primary fs-6">{{ matiere.nom }}</span></td>
-                        <td><span class="badge bg-success">Active</span></td>
+                        <td> <span>{{ matiere.nom }}</span></td>
+                        <td><span>Active</span></td>
                         <td class="text-end">
                             <a href="{% url 'categories:matiere_edit' matiere.pk %}" class="btn btn-warning btn-sm">  <i class="bi bi-pencil-square"></i>
                             </a>

@@ -42,35 +42,10 @@ Tableau de bord
                         <small class="text-muted">Commentaires</small>
                         <h2 class="fw-bold mb-0">{{ nb_comments }}</h2>
                     </div>
-                    <i class="bi bi-chat-dots-fill fs-1 text-warning"></i>
+                    <i class="bi bi-chat-dots-fill fs-1 text-primary"></i>
                 </div>
             </div>
         </div>
-
-        <div class="col-xl-3 col-md-6">
-            <div class="card border-0 shadow-sm rounded-4 h-100">
-                <div class="card-body d-flex justify-content-between align-items-center">
-                    <div>
-                        <small class="text-muted">Enseignants</small>
-                        <h2 class="fw-bold mb-0">{{ nb_teachers }}</h2>
-                    </div>
-                    <i class="bi bi-mortarboard-fill fs-1 text-info"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-4 col-md-6">
-            <div class="card border-0 shadow-sm rounded-4 h-100">
-                <div class="card-body d-flex justify-content-between align-items-center">
-                    <div>
-                        <small class="text-muted">Étudiants</small>
-                        <h2 class="fw-bold mb-0">{{ nb_students }}</h2>
-                    </div>
-                    <i class="bi bi-person-workspace fs-1 text-danger"></i>
-                </div>
-            </div>
-        </div>
-
         <div class="col-xl-4 col-md-6">
             <div class="card border-0 shadow-sm rounded-4 h-100">
                 <div class="card-body d-flex justify-content-between align-items-center">
@@ -163,8 +138,8 @@ Tableau de bord
                                 <tr>
                                     <td>{{ document.title }}</td>
                                     <td>{{ document.auteur }}</td>
-                                    <td><span class="badge bg-primary">  {{ document.matiere }} </span></td>
-                                    <td><span class="badge bg-success">  {{ document.niveau }} </span></td>
+                                    <td><span>  {{ document.matiere }} </span></td>
+                                    <td><span>  {{ document.niveau }} </span></td>
                                     <td>{{ document.created_at|date:"d/m/Y" }}</td>
                                 </tr>
                                 {% empty %}
@@ -190,11 +165,11 @@ Tableau de bord
                             <div>
                                 <strong>{{ user.username }}</strong><br>
                                 {% if user.role == "admin" %}
-                                    <span class="badge bg-danger">Administrateur</span>
+                                    <span>Administrateur</span>
                                 {% elif user.role == "teacher" %}
-                                    <span class="badge bg-success">Enseignant</span>
+                                    <span>Enseignant</span>
                                 {% else %}
-                                    <span class="badge bg-primary">Étudiant</span>
+                                    <span>Elève</span>
                                 {% endif %}
                             </div>
                             <small class="text-muted">{{ user.date_joined|date:"d/m" }} </small>
@@ -206,15 +181,4 @@ Tableau de bord
             </div>
         </div>
     </div>
-    <!-- BIENVENUE -->
-    <div class="card border-0 shadow-sm rounded-4">
-        <div class="card-body">
-            <h4> <i class="bi bi-stars text-warning"></i>Bienvenue dans l'espace d'administration</h4>
-            <p class="text-muted mb-0">Gérez les utilisateurs, les documents, les matières,les niveaux et les commentaires depuis cette interface.
-            </p>
-
-        </div>
-    </div>
-</div>
-
 {% endblock %}

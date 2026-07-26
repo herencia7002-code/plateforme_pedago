@@ -122,12 +122,12 @@ Gestion des utilisateurs
                         <tr>
                             <td> {{ user.first_name }} {{ user.last_name }}  </td>
                             <td>{{ user.email }}</td>
-                            <td><span class="badge bg-info"> {{ user.get_role_display }} </span></td>
+                            <td><span> {{ user.get_role_display }} </span></td>
                             <td>
                                 {% if user.is_active %}
-                                    <span class="badge bg-success">Actif</span>
+                                    <span>Actif</span>
                                 {% else %}
-                                    <span class="badge bg-danger">  Désactivé</span>
+                                    <span>  Désactivé</span>
                                 {% endif %}
                             </td>
                             <td>{{ user.date_joined|date:"d/m/Y H:i" }} </td>

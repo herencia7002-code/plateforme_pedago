@@ -27,7 +27,7 @@ Gestion des commentaires
     </div>
     <div class="card-body">
         <div class="mb-3">
-            <span class="badge bg-primary fs-6"> {{ nb_comments }} commentaire(s)</span>
+            <span> {{ nb_comments }} commentaire(s)</span>
         </div>
         <div class="table-responsive">
             <table class="table table-hover align-middle">
@@ -44,7 +44,7 @@ Gestion des commentaires
                 {% for comment in comments %}
                 <tr>
                     <td> <i class="bi bi-person-circle"></i> {{ comment.user.username }}</td>
-                    <td><span class="badge bg-info text-dark"> {{ comment.document.title }}</span></td>
+                    <td><span> {{ comment.document.title }}</span></td>
                     <td> {{ comment.content|truncatechars:60 }}</td>
                     <td> {{ comment.created_at|date:"d/m/Y H:i" }}</td>
                     <td class="text-center">

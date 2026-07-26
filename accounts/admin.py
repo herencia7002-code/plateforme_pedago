@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Course,
+from .models import User, Course
 
 
 admin.site.site_header = 'Plateforme pédagogique — Administration'
