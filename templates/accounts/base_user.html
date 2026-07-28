@@ -20,16 +20,15 @@
             <small>Espace utilisateur</small>
         </div>
         <nav class="sidebar-menu">
+            <a href="{% url 'home' %}">Accueil </a>
             <a href="{% url 'accounts:user_dashboard' %}">Tableau de bord</a>
             <a href="{% url 'resources:user_document_list' %}">Documents </a>
             <a href="{% url 'accounts:downloads' %}">Mes téléchargements</a>
             <a href="{% url 'accounts:comments' %}"> Mes commentaires</a>
             {% if user.role == "teacher" %}
-            <hr>
-            <a href="{% url 'resources:document_create' %}">Publier un document </a>
-             <a href="{% url 'accounts:publications' %}">Mes publications </a>
+            <a href="{% url 'accounts:document_create' %}">Publier un document </a>
+            <a href="{% url 'accounts:publications' %}">Mes publications </a>
             {% endif %}
-            <hr>
             <a href="{% url 'accounts:profil' %}"> Mon profil</a>
             <a href="{% url 'accounts:parametres' %}">Paramètres</a>
             <a href="{% url 'accounts:logout' %}">Déconnexion</a>

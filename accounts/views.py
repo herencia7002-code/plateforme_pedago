@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.http import HttpResponseForbidden
+from django.db.models import Count, Sum
 from django.views.generic import TemplateView
 from django.views.generic import (
     ListView,
@@ -17,6 +20,7 @@ from django.views.generic import (
 from resources.models import Document, Comment
 from categories.models import Matiere, Niveau
 from .forms import UserForm, UserUpdateForm
+from resources.forms import DocumentForm
 
 # Create your views here.
 
@@ -45,7 +49,7 @@ class UserCreateView(LoginRequiredMixin, AdminRequiredMixin, CreateView):
     model = User
     form_class = UserForm
     template_name = "users/user_form.html"
-    success_url = reverse_lazy("users:user_list")
+    success_url = reverse_lazy("accounts:user_list")
 
 # Modifier
 
@@ -53,14 +57,14 @@ class UserUpdateView(LoginRequiredMixin, AdminRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = "users/user_form.html"
-    success_url = reverse_lazy("users:user_list")
+    success_url = reverse_lazy("accounts:user_list")
 
 # Supprimer
 
 class UserDeleteView(LoginRequiredMixin, AdminRequiredMixin, DeleteView):
     model = User
     template_name = "users/user_confirm_delete.html"
-    success_url = reverse_lazy("users:user_list")
+    success_url = reverse_lazy("accounts:user_list")
 
 # Activer/Désactiver
 
@@ -74,7 +78,7 @@ class ToggleUserStatusView(LoginRequiredMixin, AdminRequiredMixin, View):
             user.is_active = not user.is_active
             user.save()
 
-        return redirect("users:user_list")
+        return redirect("accounts:user_list")
 
 class UserDashboardView(LoginRequiredMixin, AdminRequiredMixin, TemplateView):
     template_name = "dashboard/utilisateurs.html"
@@ -97,18 +101,19 @@ def profil(request):
 @login_required
 def user_dashboard(request):
 
+    mes_documents = Document.objects.filter(auteur=request.user)
+    nb_publications = mes_documents.count()
+    nb_telechargements = mes_documents.aggregate( total=Sum("nb_telechargements"))["total"] or 0
     context = {
-        "nb_publications": 0,
-        "nb_telechargements": 0,
-        "nb_commentaires": 0,
-        "nb_vues": 0,
-        "nb_consultations": 0,
+        "nb_publications": nb_publications,
+        "nb_telechargements": nb_telechargements,
+        "nb_commentaires": Comment.objects.filter( document__auteur=request.user).count(),
     }
     return render( request, "accounts/dashboard.html", context)
 
 @login_required
 def downloads(request):
-    return render( request, "accounts/mes_telechargements.html", { "downloads": []} )
+    return render( request, "accounts/downloads.html", { "downloads": []} )
 
 @login_required
 def comments(request):
@@ -118,8 +123,54 @@ def comments(request):
         .select_related("document")
         .order_by("-created_at")
     )
-    return render(request, "accounts/mes_commentaires.html",{ "commentaires": commentaires, },
+    return render(request, "accounts/comments.html",{ "commentaires": commentaires, },
     )
+
+@login_required
+def document_create(request):
+    if request.user.role != "teacher":
+        return HttpResponseForbidden( "Cette page est réservée aux enseignants." )
+    if request.method == "POST":
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            document = form.save(commit=False)
+            document.auteur = request.user
+            document.save()
+            messages.success(request, 'Document ajouté avec succès.')
+            return redirect("accounts:publications")
+        else:
+            print(form.errors)
+    else:
+        form = DocumentForm()
+    return render( request, "accounts/document_form.html", {"form": form, "action": "Ajouter"},
+    )
+
+@login_required
+def document_update(request, pk):
+    
+    document = get_object_or_404(Document, pk=pk)
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES, instance=document)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Document modifié avec succès.')
+            return redirect('accounts:publications')
+        else:
+            print(form.errors)
+    else:
+        form = DocumentForm(instance=document)
+    return render(request, 'accounts/document_form.html', {'form': form, 'action': 'Modifier', 'document': document})
+
+
+@login_required
+def document_delete(request, pk):
+    document = get_object_or_404(Document, pk=pk)
+    if request.method == 'POST':
+        document.delete()
+        messages.success(request, 'Document supprimé avec succès.')
+        return redirect('accounts:publications')
+    return render(request, 'accounts/document_confirm_delete.html', {'document': document})
+
 
 @login_required
 def publications(request):
@@ -133,7 +184,7 @@ def publications(request):
         .select_related("matiere", "niveau")
         .order_by("-created_at")
     )
-    return render( request, "accounts/mes_publications.html", { "documents": documents,},
+    return render( request, "accounts/publications.html", { "documents": documents,},
     )
 
 @login_required

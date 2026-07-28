@@ -14,6 +14,10 @@ from .views import (
     comments,
     publications,
     parametres,
+    document_create,
+    document_update,
+    document_delete,
+    
 )
 
 app_name = "accounts"
@@ -31,5 +35,8 @@ urlpatterns = [
     path( "comments/", comments, name="comments"),
     path( "publications/", publications,name="publications"),
     path( "parametres/",parametres, name="parametres"),
+    path( "documents/publier/", document_create, name="document_create"),
+    path('modifier/<int:pk>/', document_update, name='document_update'),
+    path('supprimer/<int:pk>/', document_delete, name='document_delete'),
 
 ]

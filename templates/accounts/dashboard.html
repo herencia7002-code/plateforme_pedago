@@ -15,8 +15,8 @@ Tableau de bord
 {% block content %}
 <div class="welcome-card">
     <div>
-        <h2>Bonjour {{ user.first_name|default:user.username }} </h2>
-        <p> Bienvenue sur votre espace personnel. Retrouvez ici toutes vos activités et vos ressources. </p>
+        <h2>Bonjour {{ user.first_name|default:user.username }}</h2>
+        <p> Bienvenue sur votre espace personnel. Retrouvez ici toutes vos activités et vos ressources.</p>
     </div>
 </div>
 <div class="row g-4 mt-2">
@@ -78,7 +78,7 @@ Tableau de bord
             <div class="list-group list-group-flush">
                 <a href="{% url 'resources:user_document_list' %}" class="list-group-item">  Consulter les documents </a>
                 {% if user.role == "teacher" %}
-                <a href="{% url 'resources:document_create' %}" class="list-group-item"> Publier un document</a>
+                <a href="{% url 'accounts:document_create' %}" class="list-group-item"> Publier un document</a>
                 {% endif %}
                 <a href="#"  class="list-group-item"> Modifier mon profil</a>
             </div>

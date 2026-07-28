@@ -10,36 +10,26 @@
 <body>
     <header>
         <div class="top-bar">
-
-        <a href="/connexion" class="btn-header"> Connexion</a>
+        <a href="/connexion" class="btn-header">Connexion</a>
         <a href="/inscription" class="btn-header"> Créer un compte</a>
     </div>
         <h1>Plateforme pédagogique</h1>
         <p>Apprenez, progressez et gérez vos cours en toute simplicité.</p>
-     <div class="search-box">
-         <form class="search-form">
-        <input type="text" placeholder="Rechercher un document, une matière ou un enseignant...">
-        <button type="submit">Rechercher</button>
-    </form>
-     </div>
+    <div class="search-box">
+        <form method="get" action="" class="search-form">
+        <input type="text" name="q" placeholder="Rechercher un document, une matière ou un enseignant..." value="{{recherche}}">
+            <button type="submit">Rechercher</button>
+        </form>
     </header>
     <main>
         <section>
             <h2>Bienvenue</h2>
             <p>Cette plateforme vous permet de découvrir des ressources, de suivre vos formations et de gérer votre profil.</p>
         </section>
-        <section>
-            <h3>Ce que nous décidons de vous offrir à travers notre plateforme</h3>
-            <ul>
-                <li>Accès à des cours, exercices et ressources pédagogiques</li>
-                <li>Créer et gérer votre compte</li>
-                <li> Vous avez un Profil utilisateur personnalisé</li>
-            </ul>
-        </section>
-        <section class="documents-section">
-    <h2>Documents récemment publiés</h2>
-    <p class="documents-intro"> Découvrez les derniers documents mis en ligne par les enseignants. </p>
-    <div class="documents-grid">
+    <section class="documents-section">
+            <h2>Documents récemment publiés</h2>
+            <p class="documents-intro"> Découvrez les derniers documents mis en ligne par les enseignants. </p>
+        <div class="documents-grid">
         {% for document in documents %}
         <div class="document-card">
             <div class="document-top">
@@ -61,8 +51,8 @@
             Aucun document n'a encore été publié.
         </div>
         {% endfor %}
-    </div>
-</section>
+        </div>
+    </section>
    
     </main>
     <footer>

@@ -23,9 +23,11 @@ def document_create(request):
             document.save()
             messages.success(request, 'Document ajouté avec succès.')
             return redirect('resources:document_list')
+        else:
+            print(form.errors)
     else:
         form = DocumentForm()
-    return render(request, 'resources/document_form.html', {'form': form, 'action': 'Ajouter'})
+    return render(request, 'dashboard/document_form.html', {'form': form, 'action': 'Ajouter'})
 
 
 @login_required
@@ -38,9 +40,11 @@ def document_update(request, pk):
             form.save()
             messages.success(request, 'Document modifié avec succès.')
             return redirect('resources:document_list')
+        else:
+            print(form.errors)
     else:
         form = DocumentForm(instance=document)
-    return render(request, 'resources/document_form.html', {'form': form, 'action': 'Modifier', 'document': document})
+    return render(request, 'dashboard/document_form.html', {'form': form, 'action': 'Modifier', 'document': document})
 
 
 @login_required
@@ -50,7 +54,7 @@ def document_delete(request, pk):
         document.delete()
         messages.success(request, 'Document supprimé avec succès.')
         return redirect('resources:document_list')
-    return render(request, 'resources/document_confirm_delete.html', {'document': document})
+    return render(request, 'dashboard/document_confirm_delete.html', {'document': document})
 
 @login_required
 def add_comment(request, pk):
@@ -81,5 +85,5 @@ def download_document(request, pk):
 @login_required
 def user_document_list(request):
     documents = Document.objects.filter(status='approved')
-    return render( request,"resources/user_document_list.html",{"documents": documents} )
+    return render( request,"accounts/user_document_list.html",{"documents": documents} )
 

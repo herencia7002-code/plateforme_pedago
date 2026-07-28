@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import redirect, get_object_or_404
 from .forms import DocumentForm
+from django.http import HttpResponseForbidden
 from django.core.paginator import Paginator
 from accounts.models import User
 from resources.models import Document, Comment
@@ -192,8 +193,27 @@ def document_delete(request, pk):
         }
     )
 @staff_member_required
-def commentaires(request):
+def document_approve(request, pk):
+    document = get_object_or_404(Document, pk=pk)
 
+    document.status = "approved"
+    document.save(update_fields=["status"])
+
+    return redirect("dashboard_documents")
+
+
+@staff_member_required
+def document_reject(request, pk):
+    document = get_object_or_404(Document, pk=pk)
+
+    document.status = "rejected"
+    document.save(update_fields=["status"])
+
+    return redirect("dashboard_documents")
+    
+
+@staff_member_required
+def commentaires(request):
     context = {
         "nb_commentaires": Comment.objects.count(),
         "derniers_commentaires": Comment.objects.order_by("-created_at")[:10],

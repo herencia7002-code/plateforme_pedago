@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model, login
 from django.contrib.auth.forms import UserCreationForm
 from accounts.forms import UserRegisterForm
 from django.shortcuts import redirect, render
+from django.db.models import Q
 from resources.models import Document
 
 class CustomUserCreationForm(UserCreationForm):
@@ -38,9 +39,24 @@ class EmailAuthenticationForm(forms.Form):
     )
 
 def home(request):
-    documents = Document.objects.select_related("auteur", "matiere", "niveau"
-    ).order_by("-created_at")
-    return render(request,"index.html",{    "documents": documents}
+    recherche = request.GET.get("q", "")
+    documents = (
+        Document.objects
+        .filter(status="approved")
+        .select_related("auteur", "matiere", "niveau")
+        .order_by("-created_at")
+    )
+    if recherche:
+        documents = documents.filter(
+            Q(title__icontains=recherche) |
+            Q(description__icontains=recherche) |
+            Q(matiere__nom__icontains=recherche) |
+            Q(niveau__nom__icontains=recherche) |
+            Q(auteur__username__icontains=recherche)
+        )
+
+    return render(request,"index.html",
+        { "documents": documents,"recherche": recherche,},
     )
 
 def redirect_after_login(user):
@@ -86,3 +102,4 @@ def connexion(request):
 
 def profil(request):
     return render(request, 'profil.html', {'user': request.user})
+

@@ -45,14 +45,6 @@ header p {
   font-size: 1.05rem;
   opacity: 0.95;
 }
-
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
 .btn-header{
     display:inline-block;
     padding:14px 24px;
@@ -67,12 +59,9 @@ nav {
     background:rgba(255,255,255,.25);
 }
 
-nav a:hover {
-  background: rgba(255,255,255,0.24);
-}
 
 main {
-  width:85%;
+    width:85%;
     max-width:1700px;
     margin:auto;
     padding:40px 0 80px;
@@ -97,21 +86,6 @@ section p {
   color: var(--muted);
 }
 
-ul {
-  list-style: none;
-  display: grid;
-  gap: 0.8rem;
-  margin-top: 0.8rem;
-}
-
-li {
-  padding: 0.9rem 1rem 0.9rem 2rem;
-  background: var(--surface-alt);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  color: var(--text);
-  position: relative;
-}
 
 li::before {
   content: "•";
@@ -167,29 +141,10 @@ li::before {
     background:#eef4ff;
 }
 
-.header-buttons{
-    margin-top:35px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
 
-.header-buttons a{
-
-    padding:12px 28px;
-    border-radius:999px;
-    border:1px solid rgba(255,255,255,.3);
-    background:rgba(255,255,255,.15);
-    color:white;
-    transition:.3s;
-}
 
 .header-buttons a:hover{
     background:rgba(255,255,255,.25);
-}
-
-.documents-section{
-    margin-top:25px;
 }
 
 .documents-subtitle{
@@ -197,21 +152,7 @@ li::before {
     color:#6b7280;
 }
 
-.documents-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:30px;
-    margin-top:30px;
-}
 
-.document-card{
-    background:white;
-    border-radius:18px;
-    border:1px solid #e5e7eb;
-    padding:20px;
-    min-height:350px;
-    transition:.3s;
-}
 .document-card:hover{
     transform:translateY(-6px);
     box-shadow:0 12px 30px rgba(0,0,0,.10);
@@ -235,13 +176,6 @@ li::before {
     color:#2563eb;
     font-weight:bold;
     margin-bottom:15px;
-}
-
-.document-info{
-    display:flex;
-    justify-content:space-between;
-    margin:20px 0;
-    font-size:15px;
 }
 
 .btn-document{
@@ -273,8 +207,9 @@ li::before {
 
 .documents-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
     gap:25px;
+    margin-top:30px;
 }
 
 .document-card{
@@ -284,6 +219,9 @@ li::before {
     border:1px solid #e5e7eb;
     box-shadow:0 8px 25px rgba(0,0,0,.05);
     transition:.3s;
+    min-height:350px;
+    display: flex;
+    flex-direction: column;
 }
 
 .document-card:hover{
@@ -316,15 +254,24 @@ li::before {
 }
 
 .document-info{
-    margin-bottom:20px;
+    display:flex;
+    flex-direction: column; 
+    gap: 6px;
+    margin:20px 0;
+    font-size:15px;
 }
 
 .document-info p{
-    margin:8px 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between
+
 }
 
 .document-actions{
     text-align:right;
+    margin-top: auto; 
+    padding-top: 15px;
 }
 
 .btn-document{
