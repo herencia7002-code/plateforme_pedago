@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Course
+from .models import User
 
 
 admin.site.site_header = 'Plateforme pédagogique — Administration'
@@ -13,10 +13,4 @@ class UserAdmin(admin.ModelAdmin):
 	list_filter = ('role', 'is_staff', 'is_active')
 	search_fields = ('username', 'email', 'school')
 
-
-@admin.register(Course)
-class CourseAdmin(admin.ModelAdmin):
-	list_display = ('title', 'teacher', 'created_at')
-	search_fields = ('title', 'description')
-	list_filter = ('created_at',)
 
