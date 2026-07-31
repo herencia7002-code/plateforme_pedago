@@ -17,6 +17,11 @@ from .views import (
     document_create,
     document_update,
     document_delete,
+    documents_publies,
+    modifier_profil,
+    modifier_photo,
+    ChangerMotDePasseView,
+    ChangementMotDePasseEffectueView,
     
 )
 
@@ -28,7 +33,7 @@ urlpatterns = [
     path( "users/<int:pk>/delete/", UserDeleteView.as_view(),name="user_delete"),
     path( "users/<int:pk>/toggle/", ToggleUserStatusView.as_view(), name="user_toggle"),
     path( "utilisateurs/",UserDashboardView.as_view(), name="admin_users_dashboard"),
-    path( "logout/", LogoutView.as_view(next_page="index"), name="logout"),
+    path( "logout/", LogoutView.as_view(next_page="home"), name="logout"),
     path( "dashboard/", user_dashboard, name="user_dashboard"),
     path( "profil/", profil, name="profil"),
     path( "downloads/", downloads, name="downloads"),
@@ -38,5 +43,10 @@ urlpatterns = [
     path( "documents/publier/", document_create, name="document_create"),
     path('modifier/<int:pk>/', document_update, name='document_update'),
     path('supprimer/<int:pk>/', document_delete, name='document_delete'),
+    path("documents/", documents_publies,name="documents_publies",),
+    path("profil/modifier/", modifier_profil, name="modifier_profil"),
+    path("photo/modifier/", modifier_photo, name="modifier_photo"),
+    path("mot-de-passe/", ChangerMotDePasseView.as_view(),name="password_change",),
+    path("mot-de-passe/succes/", ChangementMotDePasseEffectueView.as_view(), name="password_change_done",),
 
 ]

@@ -7,6 +7,8 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponseForbidden
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.views import PasswordChangeDoneView
 from django.db.models import Count, Sum
 from django.views.generic import TemplateView
 from django.views.generic import (
@@ -19,7 +21,7 @@ from django.views.generic import (
 
 from resources.models import Document, Comment
 from categories.models import Matiere, Niveau
-from .forms import UserForm, UserUpdateForm
+from .forms import UserForm, UserUpdateForm, PhotoProfilForm
 from resources.forms import DocumentForm
 
 # Create your views here.
@@ -191,3 +193,64 @@ def publications(request):
 def parametres(request):
     return render(request,"accounts/parametres.html", { "user": request.user,},
     )
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from resources.models import Document
+
+@login_required
+def documents_publies(request):
+    documents = (
+        Document.objects
+        .filter(status="approved")
+        .select_related("auteur", "matiere", "niveau")
+        .order_by("-created_at")
+    )
+
+    context = {
+        "documents": documents,
+    }
+    return render(request, "dashboard/documents_publies.html", context)
+
+@login_required
+def modifier_profil(request):
+    if request.method == "POST":
+        form = UserUpdateForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Votre profil a été mis à jour avec succès.")
+            return redirect("accounts:user_dashboard")
+    else:
+        form = UserUpdateForm(instance=request.user)
+
+    return render(request, "accounts/modifier_profil.html", {"form": form})
+
+@login_required
+def modifier_photo(request):
+
+    if request.method == "POST":
+        form = PhotoProfilForm(
+            request.POST,
+            request.FILES,
+            instance=request.user
+        )
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Photo mise à jour avec succès.")
+            return redirect("accounts:user_dashboard")
+
+    else:
+        form = PhotoProfilForm(instance=request.user)
+
+    return render(request, "accounts/modifier_photo.html", {"form": form})
+
+
+class ChangerMotDePasseView(PasswordChangeView):
+    template_name = "accounts/changer_mot_de_passe.html"
+    success_url = reverse_lazy("password_change_done")
+
+
+class ChangementMotDePasseEffectueView(PasswordChangeDoneView):
+    template_name = "accounts/password_change_done.html"

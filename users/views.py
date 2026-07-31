@@ -39,7 +39,10 @@ class EmailAuthenticationForm(forms.Form):
     )
 
 def home(request):
-    recherche = request.GET.get("q", "")
+    recherche = request.GET.get("q", "").strip()
+    niveau_filtre = request.GET.get('niveau', '').strip()
+    matiere_filtre = request.GET.get('matiere', '').strip()
+
     documents = (
         Document.objects
         .filter(status="approved")
@@ -52,9 +55,10 @@ def home(request):
             Q(description__icontains=recherche) |
             Q(matiere__nom__icontains=recherche) |
             Q(niveau__nom__icontains=recherche) |
-            Q(auteur__username__icontains=recherche)
+            Q(auteur__username__icontains=recherche) |
+            Q(auteur__first_name__icontains=recherche) |
+            Q(auteur__last_name__icontains=recherche)
         )
-
     return render(request,"index.html",
         { "documents": documents,"recherche": recherche,},
     )

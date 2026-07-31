@@ -1,0 +1,27 @@
+{% extends "accounts/base_user.html" %}
+{% block content %}
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            Modifier la photo
+        </div>
+        <div class="card-body text-center">
+            {% if request.user.profile_photo %}
+                <img src="{{ request.user.profile_photo.url }}"
+                     class="rounded-circle mb-3"
+                     width="170">
+            {% endif %}
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-success">
+                    <i class="bi bi-camera"></i>
+                    Modifier la photo
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -64,7 +64,7 @@ Mon profil
                     <label>Biographie</label>
                     <textarea class="form-control" rows="5" readonly>{{ user.bio }}</textarea>
                 </div>
-                <a href="#"  class="btn btn-primary"> <i class="bi bi-pencil-square"></i> Modifier mon profil </a>
+                <a href="{% url 'accounts:modifier_profil' %}"  class="btn btn-primary"> <i class="bi bi-pencil-square"></i> Modifier mon profil </a>
             </div>
         </div>
     </div>

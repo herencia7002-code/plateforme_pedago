@@ -68,7 +68,6 @@ def add_comment(request, pk):
             comment.save()
     return redirect("resources:document_detail", pk=document.pk)
 
-@login_required
 def document_detail(request, pk):
     document = get_object_or_404(Document, pk=pk)
     form = CommentForm()

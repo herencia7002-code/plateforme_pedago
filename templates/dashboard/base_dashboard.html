@@ -19,14 +19,16 @@
             <p>Administration</p>
         </div>
         <nav class="sidebar-menu">
-            <a href="{% url 'home' %}">Accueil </a>
-            <a href="{% url 'dashboard' %}">Tableau de bord </a>
-            <a href="{% url 'dashboard_documents' %}">Documents </a>
-            <a href="{% url 'dashboard_utilisateurs' %}">Utilisateurs </a>
-            <a href="{% url 'dashboard_matieres' %}"> Matières </a>
-            <a href="{% url 'dashboard_niveaux' %}"> Niveaux </a>
-            <a href="{% url 'dashboard_commentaires' %}"> Commentaires </a>
-            <a href="{% url 'dashboard_parametres' %}">Paramètres</a>
+            <a href="{% url 'home' %}"><i class="bi bi-house-door"></i>  Accueil </a>
+            <a href="{% url 'dashboard' %}"><i class="bi bi-speedometer2"></i>  Tableau de bord </a>
+            <a href="{% url 'dashboard_documents' %}"><i class="bi bi-file-earmark-text"></i>  Documents </a>
+            <hr>
+            <a href="{% url 'dashboard_utilisateurs' %}"><i class="bi bi-people"></i>  Utilisateurs </a>
+            <a href="{% url 'dashboard_matieres' %}"> <i class="bi bi-grid"></i>  Matières </a>
+            <a href="{% url 'dashboard_niveaux' %}"> <i class="bi bi-diagram-3-fill"></i>  Niveaux </a>
+            <hr>
+            <a href="{% url 'dashboard_commentaires' %}"><i class="bi bi-chat-left-text"></i>  Commentaires </a>
+            <a href="{% url 'dashboard_parametres' %}"><i class="bi bi-gear"></i> Paramètres</a>
         </nav>
     </aside>
     <!-- Partie droite -->

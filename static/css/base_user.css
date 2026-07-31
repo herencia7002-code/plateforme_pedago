@@ -25,6 +25,33 @@ body{
     display:flex;
     min-height:100vh;
 }
+.sidebar-menu a,
+.sidebar-menu .logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.sidebar-menu .logout-btn:hover {
+  background:var(--sidebar-hover);
+    color:white;
+
+}
+
+.logout-form {
+  margin: 0;
+  padding: 0;
+}
 .sidebar{
     width:270px;
     background:var(--sidebar);

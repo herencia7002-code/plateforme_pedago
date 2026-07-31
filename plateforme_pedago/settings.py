@@ -139,4 +139,4 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 # Use custom user model from `accounts` app
 AUTH_USER_MODEL = 'accounts.User'
-
+LOGIN_URL = "connexion"

@@ -5,3 +5,58 @@
 Documents publiés
 {% endblock %}
 
+{% block content %}
+
+<table class="table table-hover align-middle w-100">
+    {% if documents %}
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-primary">
+                <tr>
+                    <th>Titre</th>
+                    <th>Matière</th>
+                    <th>Niveau</th>
+                    <th>Auteur</th>
+                    <th>Date</th>
+                    <th>Téléchargements</th>
+                    <th>Voir</th>
+                    <th>Fichier</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for document in documents %}
+                <tr>
+                    <td>
+                        <strong>{{ document.title }}</strong><br>
+                        {% if document.description %}
+                            <small class="text-muted"> {{ document.description|truncatechars:80 }}</small>
+                        {% endif %}
+                    </td>
+                    <td>{{ document.matiere }}</td>
+                    <td>{{ document.niveau }}</td>
+                    <td>{{ document.auteur.username }}</td>
+                    <td>{{ document.created_at|date:"d/m/Y" }}</td>
+                    <td>
+                        <span>{{ document.nb_telechargements }}</span>
+                    </td>
+                    <td>
+                        <a href="{% url 'resources:document_detail' document.pk %}" class="btn btn-sm btn-outline-primary" title="Voir le document">
+                            <i class="bi bi-eye"></i> 
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'resources:download_document' document.pk %}" class="btn btn-sm btn-primary" target="_blank">
+                            <i class="bi bi-download"></i>Télécharger
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <div class="alert alert-info"> Aucun document publié pour le moment.</div>
+    {% endif %}
+</table>
+
+{% endblock %}

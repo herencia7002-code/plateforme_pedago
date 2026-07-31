@@ -19,7 +19,7 @@
             </div>
             <div class="card-body">
                 <p>  Modifier vos informations personnelles. </p>
-                <a href="#"  class="btn btn-primary">  Modifier mon profil </a>
+                <a href="{% url 'accounts:modifier_profil' %}"  class="btn btn-primary">  Modifier mon profil </a>
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
             </div>
             <div class="card-body">
                 <p> Modifier votre mot de passe. </p>
-                <a href="#" class="btn btn-warning"> Changer le mot de passe </a>
+                <a href="{% url 'accounts:password_change' %}" class="btn btn-warning"> Changer le mot de passe </a>
             </div>
         </div>
     </div>
@@ -43,7 +43,7 @@
             </div>
             <div class="card-body">
                 <p> Mettre à jour votre photo. </p>
-                <a href="#" class="btn btn-success"> Modifier la photo </a>
+                <a href="{% url 'accounts:modifier_photo' %}" class="btn btn-success"> Modifier la photo </a>
             </div>
         </div>
     </div>
