@@ -58,6 +58,7 @@ Gestion des documents
                         <th>Auteur</th>
                         <th>Matière</th>
                         <th>Niveau</th>
+                        <th>Type</th>
                         <th>Date</th>
                         <th>Téléchargements</th>
                         <th>Statut</th>
@@ -73,6 +74,7 @@ Gestion des documents
                         <td> {{ document.auteur }} </td>
                         <td> {{ document.matiere }}  </td>
                         <td>{{ document.niveau }} </td>
+                        <td>{{ document.get_type_ressource_display }}</td>
                         <td> {{ document.created_at|date:"d/m/Y" }}  </td>
                         <td> {{ document.nb_telechargements}} </td>
                         <td>

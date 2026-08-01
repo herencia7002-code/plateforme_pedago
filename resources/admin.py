@@ -3,15 +3,15 @@ from .models import Document, Comment
 
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
-    list_display = ("title", "matiere", "niveau", "auteur", "status", "nb_telechargements","created_at")
-    search_fields = ("title", "description", "auteur__username",)
-    list_filter = ( "status","matiere","niveau","created_at")
+    list_display = ("title", "matiere", "niveau", "auteur", "type_ressource", "status", "nb_telechargements","created_at")
+    search_fields = ("title", "description", "auteur__username","type_ressource")
+    list_filter = ( "status","matiere","niveau","created_at","type_ressource")
     ordering = ("-created_at",)
     list_editable = ("status" , )
     readonly_fields = ("nb_telechargements","created_at","updated_at",)
     fieldsets = (
         ("Informations générales", {"fields": ("title","description", "file" )}),
-        ("Catégorisation", { "fields": ( "matiere", "niveau", "auteur")}),
+        ("Catégorisation", { "fields": ( "matiere", "niveau", "auteur","type_ressource")}),
         ("Validation", { "fields": ( "status",)}),
         ("Statistiques", {"fields": ( "nb_telechargements", "created_at", "updated_at")}),
     )

@@ -16,6 +16,7 @@ Documents publiés
                     <th>Titre</th>
                     <th>Matière</th>
                     <th>Niveau</th>
+                    <th>Type</th>
                     <th>Auteur</th>
                     <th>Date</th>
                     <th>Téléchargements</th>
@@ -34,6 +35,7 @@ Documents publiés
                     </td>
                     <td>{{ document.matiere }}</td>
                     <td>{{ document.niveau }}</td>
+                    <td>{{ document.get_type_ressource_display }}</td>
                     <td>{{ document.auteur.username }}</td>
                     <td>{{ document.created_at|date:"d/m/Y" }}</td>
                     <td>

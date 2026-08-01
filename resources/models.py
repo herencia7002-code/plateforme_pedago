@@ -4,9 +4,20 @@ from django.db.models import F
 
 
 class Document(models.Model): 
+      
+    TYPE_RESSOURCE_CHOICES = [
+    ("cours", "Cours"),
+    ("exercices", "Exercices"),
+    ("fiche_pedagogique", "Fiche pédagogique"),
+]
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     file = models.FileField(upload_to='documents/')
+    type_ressource = models.CharField(
+    max_length=20,
+    choices=TYPE_RESSOURCE_CHOICES,
+    verbose_name="Type de ressource",
+                )
     auteur  = models.ForeignKey(
                   settings.AUTH_USER_MODEL,
                   on_delete=models.PROTECT,

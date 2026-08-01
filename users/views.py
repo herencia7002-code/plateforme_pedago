@@ -49,6 +49,11 @@ def home(request):
         .select_related("auteur", "matiere", "niveau")
         .order_by("-created_at")
     )
+    documents = Document.objects.filter(type_ressource="cours",status="approved")
+    type_filtre = request.GET.get("type")
+
+    if type_filtre:
+        documents = documents.filter(type_ressource=type_filtre)
     if recherche:
         documents = documents.filter(
             Q(title__icontains=recherche) |

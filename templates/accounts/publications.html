@@ -27,6 +27,7 @@ Mes publications
                         <th>Titre</th>
                         <th>Matière</th>
                         <th>Niveau</th>
+                        <th>Type</th>
                         <th>Téléchargements</th>
                         <th>Actions</th>
                     </tr>
@@ -37,6 +38,7 @@ Mes publications
                         <td>{{ document.title }}</td>
                         <td>{{ document.matiere }}</td>
                         <td>{{ document.niveau }}</td>
+                        <td>{{ document.get_type_ressource_display }}</td>
                         <td>{{ document.nb_telechargements }}</td>
                         <td>
                             <a href="{% url 'resources:document_detail' document.pk %}" class="btn btn-sm btn-outline-primary">Voir </a>
