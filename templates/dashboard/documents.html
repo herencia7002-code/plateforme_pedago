@@ -64,6 +64,7 @@ Gestion des documents
                             <th>Niveau</th>
                             <th>Type</th>
                             <th>Auteur</th>
+                            <th>Statut</th>
                             <th>Date</th>
                         </tr>
                     </thead>
@@ -75,11 +76,12 @@ Gestion des documents
                             <td>{{ document.niveau.nom }}</td>
                             <td>{{ document.get_type_ressource_display }}</td>
                             <td>{{ document.auteur.username }}</td>
+                            <td>{{ document.get_status_display }}</td>
                             <td>{{ document.created_at|date:"d/m/Y" }}</td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="6" class="text-center"> Aucun document disponible. </td>
+                            <td colspan="7" class="text-center"> Aucun document disponible. </td>
                         </tr>
                     {% endfor %}
                     </tbody>

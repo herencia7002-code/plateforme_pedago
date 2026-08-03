@@ -16,5 +16,8 @@ urlpatterns = [
     path("documents/<int:pk>/valider/", views.document_approve,name="dashboard_document_approve"),
     path("documents/<int:pk>/refuser/", views.document_reject, name="dashboard_document_reject",),
     path("documents/liste/", views.documents, name="dashboard_documents_list"),
+    path("mot-de-passe/", views.ChangerMotDePasseView.as_view(),name="password_change",),
+    path("mot-de-passe/succes/", views.ChangementMotDePasseEffectueView.as_view(), name="password_change_done",),
+    
     
 ]

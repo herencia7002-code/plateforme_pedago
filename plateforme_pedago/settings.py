@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'categories',
     'ratings',
     'dashboard',
+    'settings_app',
+    'django_extensions',
     
 ]
 

@@ -3,6 +3,9 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import redirect, get_object_or_404
 from .forms import DocumentForm
 from django.http import HttpResponseForbidden
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.views import PasswordChangeDoneView
 from django.core.paginator import Paginator
 from accounts.models import User
 from resources.models import Document, Comment
@@ -20,6 +23,7 @@ def dashboard(request):
 )
     derniers_documents = (
         Document.objects
+        .filter(status="approved")
         .select_related("auteur", "matiere", "niveau")
         .order_by("-created_at")[:10]
     )
@@ -224,3 +228,11 @@ def commentaires(request):
         "dashboard/commentaires.html",
         context,
     )
+
+class ChangerMotDePasseView(PasswordChangeView):
+    template_name = "dashboard/changer_mot_de_passe.html"
+    success_url = reverse_lazy("password_change_done")
+
+
+class ChangementMotDePasseEffectueView(PasswordChangeDoneView):
+    template_name = "dashboard/password_change_done.html"

@@ -2,21 +2,106 @@
 {% block content %}
 
 <div class="container mt-4">
-    <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-            Modifier mon profil
+<div class="card shadow-sm border-0 rounded-4">
+<div class="card-header bg-primary text-white">
+    <i class="bi bi-person-gear"></i> Modifier mon profil
+</div>
+<div class="card-body p-4">
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} rounded-3">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">Prénom</label>
+                {{ form.first_name }}
+                {% for error in form.first_name.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Nom</label>
+                {{ form.last_name }}
+                {% for error in form.last_name.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Nom d'utilisateur</label>
+                {{ form.username }}
+                <div class="form-text">150 caractères max. Lettres, chiffres et @/./+/-/_ uniquement.</div>
+                {% for error in form.username.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Adresse email</label>
+                {{ form.email }}
+                {% for error in form.email.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Rôle</label>
+                {{ form.role }}
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Établissement</label>
+                {{ form.school }}
+            </div>
+
+            <div class="col-12">
+                <label class="form-label">Bio</label>
+                {{ form.bio }}
+            </div>
+
+            <div class="col-12">
+                <label class="form-label">Photo de profil</label>
+
+                {% if form.instance.profile_photo %}
+                    <div class="mb-2">
+                        <img src="{{ form.instance.profile_photo.url }}" alt="Photo de profil"
+                             class="rounded-circle border" style="width: 90px; height: 90px; object-fit: cover;">
+                    </div>
+                {% endif %}
+
+                {{ form.profile_photo }}
+                {% for error in form.profile_photo.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="col-12">
+                <div class="form-check">
+                    {{ form.is_active }}
+                    <label class="form-check-label">
+                        Compte actif
+                    </label>
+                    <div class="form-text">Décochez cette case au lieu de supprimer le compte pour le désactiver.</div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <form method="POST">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button class="btn btn-primary">
-                    <i class="bi bi-check-circle"></i>
-                    Enregistrer
-                </button>
-            </form>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-circle"></i> Enregistrer
+            </button>
         </div>
-    </div>
+    </form>
+
+</div>
+</div>
 </div>
 
 {% endblock %}
