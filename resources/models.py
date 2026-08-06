@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+import hashlib
 from django.db.models import F
 
 
@@ -51,7 +52,13 @@ class Document(models.Model):
         choices=STATUS_CHOICES,
         default="pending",
 )
-
+    
+    file_hash = models.CharField(
+        max_length=64,
+        unique=True,
+        blank=True,
+        editable=False
+)
 
     class Meta:
         verbose_name        = 'Document'
@@ -91,3 +98,16 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.auteur.username} - {self.document.title}"
+
+def calculate_file_hash(file):
+    sha256 = hashlib.sha256()
+
+    for chunk in file.chunks():
+        sha256.update(chunk)
+    file.seek(0)
+    return sha256.hexdigest()
+
+def save(self, *args, **kwargs):
+    if self.file and not self.file_hash:
+        self.file_hash = calculate_file_hash(self.file)
+    super().save(*args, **kwargs)

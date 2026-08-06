@@ -17,11 +17,17 @@ def document_list(request):
 def document_create(request):
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
+        hash_fichier = calculate_file_hash(fichier)
+        if Document.objects.filter(file_hash=hash_fichier).exists():
+                messages.error(request,"Ce document est déjà présent sur la plateforme.")
+        return redirect("resources:add_document")
         if form.is_valid():
             document = form.save(commit=False)
             document.auteur = request.user
+            document.file_hash = hash_fichier
             document.save()
             messages.success(request, 'Document ajouté avec succès.')
+            messages.error(request,"Publication impossible : ce document existe déjà sur la plateforme.")
             return redirect('resources:document_list')
         else:
             print(form.errors)

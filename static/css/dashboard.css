@@ -53,14 +53,10 @@ body{
 .sidebar-menu a:hover{
     background:rgba(255,255,255,.10);
 }
-
-/* Partie droite */
 .main-content{
     margin-left:260px;
     width:100%;
 }
-
-/* Barre supérieure */
 .topbar{
     height:75px;
     background:#2563eb;
@@ -75,8 +71,6 @@ body{
 .admin-info{
     font-size:16px;
 }
-
-/* Contenu */
 .content{
     padding:35px;
 }

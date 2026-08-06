@@ -94,7 +94,7 @@ a {
    
 }
 .navbar{
-    padding:5px 0;
+    padding:25px 0;
 
 }
 
@@ -210,6 +210,10 @@ main {
     max-width:none;
     margin-top:40px;
     padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 section {
@@ -374,6 +378,8 @@ section p {
     position:fixed;
     left:90px;
     top:200px;
+    max-height: calc(100vh - 220px);
+    overflow-y: auto;
     background:white;
     width:250px;
     padding:20px;
@@ -381,6 +387,9 @@ section p {
     box-shadow:0 10px 30px rgba(0,0,0,.15);
     display:none;
     z-index:9999;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .floating-menu a{
     display:block;

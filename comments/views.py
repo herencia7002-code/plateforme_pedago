@@ -26,7 +26,9 @@ class CommentListView(LoginRequiredMixin, ListView):
         if q:
             queryset = queryset.filter(
                 Q(content__icontains=q) |
-                Q(user__username__icontains=q) |
+                Q(auteur__username__icontains=q) |
+                Q(auteur__first_name__icontains=q) |
+                Q(auteur__last_name__icontains=q) |
                 Q(document__title__icontains=q)
             )
 
