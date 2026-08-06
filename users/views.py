@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.forms import UserCreationForm
 from accounts.forms import UserRegisterForm
+from categories.models import Matiere, Niveau
 from django.shortcuts import redirect, render
 from django.db.models import Q
 from resources.models import Document
@@ -64,10 +65,36 @@ def home(request):
             Q(auteur__first_name__icontains=recherche) |
             Q(auteur__last_name__icontains=recherche)
         )
-    return render(request,"index.html",
-        { "documents": documents,"recherche": recherche,},
-    )
+    if matiere_filtre:
+        documents = documents.filter(
+            matiere__nom=matiere_filtre
+        )
 
+    if niveau_filtre:
+        documents = documents.filter(
+            niveau__nom=niveau_filtre
+        )
+
+    if type_filtre:
+        documents = documents.filter(
+            type_ressource=type_filtre
+        )
+
+    matieres = Matiere.objects.all()
+    niveaux = Niveau.objects.all()
+    types_ressources = [
+        "Cours",
+        "Exercices",
+        "Fiches pédagogiques"
+    ]
+    context = {
+        "documents": documents,
+        "matieres": matieres,
+        "niveaux": niveaux,
+        "types_ressources": types_ressources,
+    }
+    return render( request, "index.html", context
+    )
 def redirect_after_login(user):
     """
     Redirige l'utilisateur selon son rôle.
@@ -111,4 +138,3 @@ def connexion(request):
 
 def profil(request):
     return render(request, 'profil.html', {'user': request.user})
-
