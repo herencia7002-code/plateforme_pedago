@@ -32,6 +32,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('categories/', include('categories.urls')),
     path('commentaires/',include('comments.urls'),),
+    path('parametres/', include('settings_app.urls')),
 ]
 
 if settings.DEBUG:

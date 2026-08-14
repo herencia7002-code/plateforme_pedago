@@ -41,16 +41,36 @@ class PhotoProfilForm(forms.ModelForm):
         self.fields["profile_photo"].widget.attrs["class"] = "form-control"
         
 class UserRegisterForm(UserCreationForm):
-
     class Meta:
         model = User
-        fields = ["username","first_name","last_name","email","school","role","profile_photo","bio","password1","password2",]
+        fields = [
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "school",
+            "role",
+            "profile_photo",
+            "bio",
+            "password1",
+            "password2",
+        ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control"
-
+        self.fields["role"].choices = [
+            ("student", "Élève"),
+            ("teacher", "Enseignant"),
+        ]
         self.fields["role"].widget.attrs["class"] = "form-select"
-        
+    def clean_role(self):
+        role = self.cleaned_data.get("role")
+
+        if role not in ["student", "teacher"]:
+            raise forms.ValidationError(
+                "Le rôle Administrateur ne peut pas être choisi lors de l'inscription."
+            )
+        return role

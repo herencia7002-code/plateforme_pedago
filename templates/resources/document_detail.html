@@ -85,6 +85,7 @@
                             </div>
                         {% endfor %}
                     </div>
+                    {% if platform_settings.autoriser_commentaires %}
                     <form method="post" action="{% url 'resources:add_comment' document.pk %}" class="mt-auto">
                         {% csrf_token %}
                         <div class="mb-3">
@@ -95,6 +96,11 @@
                             Publier
                         </button>
                     </form>
+                    {% else %}
+                    <div class="alert alert-warning mt-auto" role="alert"><i class="bi bi-chat-left-text me-2"></i>
+                        Les commentaires sont actuellement désactivés.
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

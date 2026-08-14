@@ -56,6 +56,7 @@ class Document(models.Model):
     file_hash = models.CharField(
         max_length=64,
         unique=True,
+        null=True,
         blank=True,
         editable=False
 )
@@ -72,25 +73,39 @@ class Document(models.Model):
         self.nb_telechargements = F("nb_telechargements") + 1
         self.save(update_fields=["nb_telechargements"])
         self.refresh_from_db()
+    
+    def save(self, *args, **kwargs):
+        if self.file:
+            sha256 = hashlib.sha256()
+            for chunk in self.file.chunks():
+                sha256.update(chunk)
+            self.file_hash = sha256.hexdigest()
+            self.file.seek(0)
+        super().save(*args, **kwargs)
+        
+def calculate_file_hash(file):
+    sha256 = hashlib.sha256()
+
+    for chunk in file.chunks():
+        sha256.update(chunk)
+
+    file.seek(0)
+
+    return sha256.hexdigest()
 
 class Comment(models.Model):
-
     document = models.ForeignKey(
         Document,
         on_delete=models.CASCADE,
         related_name='comments'
     )
-
     auteur = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='comments'
     )
-
     content = models.TextField("Commentaire")
-
     created_at = models.DateTimeField(auto_now_add=True)
-
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -99,15 +114,3 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.auteur.username} - {self.document.title}"
 
-def calculate_file_hash(file):
-    sha256 = hashlib.sha256()
-
-    for chunk in file.chunks():
-        sha256.update(chunk)
-    file.seek(0)
-    return sha256.hexdigest()
-
-def save(self, *args, **kwargs):
-    if self.file and not self.file_hash:
-        self.file_hash = calculate_file_hash(self.file)
-    super().save(*args, **kwargs)

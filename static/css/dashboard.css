@@ -147,3 +147,27 @@ body{
 .table td{
     vertical-align:middle;
 }
+.container-fluid input.form-control {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    height: 38px !important;
+    padding: 6px 12px !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 6px !important;
+    background-color: #fff !important;
+    color: #212529 !important;
+}
+.container-fluid .form-check-input {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    cursor: pointer !important;
+}
+.container-fluid .form-switch .form-check-input {
+    width: 2em !important;
+    height: 1em !important;
+    margin-top: 0.25em !important;
+    margin-right: 0.5em !important;
+}

@@ -1,12 +1,7 @@
 {% extends "dashboard/base_dashboard.html" %}
 
-{% block title %}
-Matière
-{% endblock %}
-
-{% block page_title %}
-Ajouter une matière
-{% endblock %}
+{% block title %}Matière{% endblock %}
+{% block page_title %}Ajouter une matière{% endblock %}
 
 {% block content %}
 
@@ -17,6 +12,7 @@ Ajouter une matière
     <div class="card-body">
         <form method="post">
             {% csrf_token %}
+            {{ form.as_p }}
             <div class="mb-3">
                 <label class="form-label">Nom de la matière</label>
                     {{ form.nom }}

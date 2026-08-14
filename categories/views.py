@@ -90,7 +90,8 @@ class NiveauListView(ListView):
 
         if recherche:
             queryset = queryset.filter(
-                Q(nom__icontains=recherche)
+                Q(nom__icontains=recherche) |
+                Q(description__icontains=recherche)
             )
 
         return queryset

@@ -33,7 +33,8 @@ Gestion des matières
                     <tr>
                         <th>#</th>
                         <th>Matière</th>
-                        <th>Statut</th>
+                        <th>Description</th>
+                        <th>Documents</th>
                         <th class="text-end">Actions</th>
                     </tr>
                 </thead>
@@ -42,7 +43,8 @@ Gestion des matières
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td> <span>{{ matiere.nom }}</span></td>
-                        <td><span>Active</span></td>
+                        <td><span>{{ matiere.description|truncatewords:10 }}</span></td>
+                        <td><span>{{ matiere.document_set.count }}</span> </td>
                         <td class="text-end">
                             <a href="{% url 'categories:matiere_edit' matiere.pk %}" class="btn btn-warning btn-sm">  <i class="bi bi-pencil-square"></i>
                             </a>

@@ -80,7 +80,7 @@ Tableau de bord
                 {% if user.role == "teacher" %}
                 <a href="{% url 'accounts:document_create' %}" class="list-group-item"> Publier un document</a>
                 {% endif %}
-                <a href="#"  class="list-group-item"> Modifier mon profil</a>
+                <a href="{% url 'accounts:modifier_profil' %}"  class="list-group-item"> Modifier mon profil</a>
             </div>
         </div>
     </div>

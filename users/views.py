@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.forms import UserCreationForm
 from accounts.forms import UserRegisterForm
+from settings_app.models import PlatformSettings
 from categories.models import Matiere, Niveau
 from django.shortcuts import redirect, render
 from django.db.models import Q
@@ -96,9 +97,6 @@ def home(request):
     return render( request, "index.html", context
     )
 def redirect_after_login(user):
-    """
-    Redirige l'utilisateur selon son rôle.
-    """
     if user.role == "admin":
         return redirect("dashboard")
 
@@ -106,6 +104,9 @@ def redirect_after_login(user):
 
 
 def inscription(request):
+    settings = PlatformSettings.get_solo()
+    if not settings.autoriser_inscriptions:
+        messages.error(request,"Les inscriptions sont actuellement désactivées.")
     if request.method == "POST":
         form = UserRegisterForm(request.POST, request.FILES)
         if form.is_valid():

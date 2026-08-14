@@ -1,17 +1,21 @@
 from django.db import models
 
 
-class PlatformSettings(models.Model):
+class ParametresPlateforme(models.Model):
     nom_plateforme = models.CharField(
-        max_length=255,
+        max_length=200,
         default="Plateforme pédagogique"
     )
 
-    email = models.EmailField(blank=True)
+    email = models.EmailField(
+        blank=True,
+        default=""
+    )
 
     telephone = models.CharField(
         max_length=30,
-        blank=True
+        blank=True,
+        default=""
     )
 
     autoriser_inscriptions = models.BooleanField(
@@ -32,15 +36,7 @@ class PlatformSettings(models.Model):
 
     class Meta:
         verbose_name = "Paramètres de la plateforme"
-
-    def save(self, *args, **kwargs):
-        self.pk = 1
-        super().save(*args, **kwargs)
-
-    @classmethod
-    def get_solo(cls):
-        obj, _ = cls.objects.get_or_create(pk=1)
-        return obj
+        verbose_name_plural = "Paramètres de la plateforme"
 
     def __str__(self):
-        return "Paramètres généraux"
+        return self.nom_plateforme

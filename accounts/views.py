@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+import hashlib
 from django.http import HttpResponseForbidden
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.views import PasswordChangeDoneView
@@ -36,7 +37,6 @@ class AdminRequiredMixin(UserPassesTestMixin):
             and self.request.user.role == "admin"
         )
 
-# Liste des utilisateurs
 
 class UserListView(LoginRequiredMixin, AdminRequiredMixin, ListView):
     model = User
@@ -45,7 +45,7 @@ class UserListView(LoginRequiredMixin, AdminRequiredMixin, ListView):
     paginate_by = 10
     ordering = ["last_name", "first_name"]
 
-# Ajouter
+
 
 class UserCreateView(LoginRequiredMixin, AdminRequiredMixin, CreateView):
     model = User
@@ -53,7 +53,6 @@ class UserCreateView(LoginRequiredMixin, AdminRequiredMixin, CreateView):
     template_name = "users/user_form.html"
     success_url = reverse_lazy("accounts:user_list")
 
-# Modifier
 
 class UserUpdateView(LoginRequiredMixin, AdminRequiredMixin, UpdateView):
     model = User
@@ -61,14 +60,11 @@ class UserUpdateView(LoginRequiredMixin, AdminRequiredMixin, UpdateView):
     template_name = "users/user_form.html"
     success_url = reverse_lazy("accounts:user_list")
 
-# Supprimer
-
 class UserDeleteView(LoginRequiredMixin, AdminRequiredMixin, DeleteView):
     model = User
     template_name = "users/user_confirm_delete.html"
     success_url = reverse_lazy("accounts:user_list")
 
-# Activer/Désactiver
 
 class ToggleUserStatusView(LoginRequiredMixin, AdminRequiredMixin, View):
 
@@ -137,6 +133,16 @@ def document_create(request):
         if form.is_valid():
             document = form.save(commit=False)
             document.auteur = request.user
+            fichier = document.file
+            sha256 = hashlib.sha256()
+            for chunk in fichier.chunks():
+                sha256.update(chunk)
+            file_hash = sha256.hexdigest()
+            fichier.seek(0)
+            if Document.objects.filter(file_hash=file_hash).exists():
+                messages.error( request, "Ce document existe déjà sur la plateforme. " "La publication a été refusée.")
+                return redirect("accounts:document_create")
+            document.file_hash = file_hash
             document.save()
             messages.success(request, 'Document ajouté avec succès.')
             return redirect("accounts:publications")
@@ -154,6 +160,26 @@ def document_update(request, pk):
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES, instance=document)
         if form.is_valid():
+            nouveau_fichier = form.cleaned_data.get("file")
+            if nouveau_fichier:
+                sha256 = hashlib.sha256()
+                for chunk in nouveau_fichier.chunks():
+                    sha256.update(chunk)
+                nouveau_hash = sha256.hexdigest()
+                nouveau_fichier.seek(0)
+                doublon = Document.objects.filter(
+                    file_hash=nouveau_hash
+                ).exclude(
+                    pk=document.pk
+                ).exists()
+                if doublon:
+                    messages.error(request, "Ce fichier existe déjà sur la plateforme. ""La modification a été refusée."  )
+                    return redirect("resources:document_update", pk=document.pk)
+                document.file_hash = nouveau_hash
+            document = form.save(commit=False)
+            document.auteur = request.user
+            if nouveau_fichier:
+                document.file_hash = nouveau_hash
             form.save()
             messages.success(request, 'Document modifié avec succès.')
             return redirect('accounts:publications')

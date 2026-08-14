@@ -45,7 +45,9 @@
                     <span class="navbar-toggler-icon"></span> </button>
                     <div class="d-flex gap-3">
                         <a href="/connexion" class="btn btn-light btn-login"><i class="bi bi-box-arrow-in-right"></i>Se connecter </a>
+                        {% if platform_settings.autoriser_inscriptions %}
                         <a href="/inscription" class="btn btn-primary btn-register"><i class="bi bi-person-plus"></i> S'inscrire</a>
+                        {% endif %}
                     </div>
                 </div>
             </nav>

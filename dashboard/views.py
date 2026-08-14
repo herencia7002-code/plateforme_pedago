@@ -1,14 +1,19 @@
 from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import redirect, get_object_or_404
-from .forms import DocumentForm
 from django.http import HttpResponseForbidden
+import hashlib
 from django.urls import reverse_lazy
+from django.contrib import messages
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.views import PasswordChangeDoneView
 from django.core.paginator import Paginator
+from .models import ParametresPlateforme
+from resources.forms import DocumentForm
+from settings_app.models import PlatformSettings
+from settings_app.forms import PlatformSettingsForm
 from accounts.models import User
-from resources.models import Document, Comment
+from resources.models import Document, Comment, calculate_file_hash
 from categories.models import Matiere, Niveau
 from django.db.models import Q
 
@@ -47,9 +52,25 @@ def documents(request):
         .select_related("auteur", "matiere", "niveau")
         .order_by("-created_at")
     )
-    q = request.GET.get("q")
-    matiere = request.GET.get("matiere")
-    niveau = request.GET.get("niveau")
+    q = request.GET.get("q", "").strip()
+    matiere = request.GET.get("matiere", "")
+    niveau = request.GET.get("niveau", "")
+    if q:
+        documents = documents.filter(
+            Q(title__icontains=q) |
+            Q(description__icontains=q) |
+            Q(auteur__username__icontains=q) |
+            Q(auteur__first_name__icontains=q) |
+            Q(auteur__last_name__icontains=q)
+        )
+    if matiere and matiere != "all":
+        documents = documents.filter(
+            matiere_id=matiere
+        )
+    if niveau and niveau != "all":
+        documents = documents.filter(
+            niveau_id=niveau
+        )
     if q:
         documents = documents.filter(
             Q(title__icontains=q) |
@@ -70,11 +91,7 @@ def documents(request):
         "niveaux": Niveau.objects.all(),
     }
 
-    return render(
-        request,
-         "dashboard/documents.html",
-        context
-    )
+    return render( request, "dashboard/documents.html", context)
 
 @staff_member_required
 def utilisateurs(request):
@@ -131,14 +148,32 @@ def commentaires(request):
         "dashboard/commentaires.html",
         {"commentaires": commentaires},
     )
+
+
 @staff_member_required
 def parametres(request):
+    settings = PlatformSettings.get_solo()
+    if request.method == "POST":
+        form = PlatformSettingsForm(request.POST, instance=settings)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Les paramètres ont été enregistrés avec succès.")
+            return redirect("dashboard_parametres")
+    else:
+        form = PlatformSettingsForm(
+            instance=settings
+        )
     context = {
         "page_title": "Paramètres de la plateforme",
+        "form": form,
     }
-    return render(request,"dashboard/parametres.html",
-    context,
+
+    return render(
+        request,
+        "dashboard/parametres.html",
+        context
     )
+
 @staff_member_required
 def document_create(request):
     if request.method == "POST":
@@ -147,17 +182,21 @@ def document_create(request):
             request.FILES
         )
         if form.is_valid():
-            form.save()
+            document = form.save(commit=False)
+            if document.file:
+                hash_fichier = calculate_file_hash(document.file)
+                doublon = Document.objects.filter(file_hash=hash_fichier).exists()
+                if doublon:
+                    messages.error( request, "Ce document existe déjà sur la plateforme.")
+                    return render( request, "dashboard/document_form.html", { "form": form, "action": "Ajouter"})
+                document.file_hash = hash_fichier
+            document.save()
+            form.save_m2m()
+            messages.success( request, "Document ajouté avec succès." )
             return redirect("dashboard_documents")
     else:
         form = DocumentForm()
-    return render(
-        request,
-        "dashboard/document_form.html",
-        {
-            "form": form,
-            "titre": "Ajouter un document"
-        }
+    return render( request,"dashboard/document_form.html",{"form": form,"action": "Ajouter"}
     )
 @staff_member_required
 def document_update(request, pk):
