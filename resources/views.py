@@ -9,6 +9,7 @@ from .models import Document,  calculate_file_hash
 from categories.models import Matiere, Niveau
 
 @login_required
+
 def document_list(request):
     documents = Document.objects.all()
     context = {'documents': documents,'matieres': Matiere.objects.all(), 'niveaux': Niveau.objects.all(),}

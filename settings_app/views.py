@@ -16,5 +16,4 @@ def parametres_generaux(request):
             return redirect("parametres_generaux")
     else:
         form = PlatformSettingsForm(instance=settings_obj)
-
     return render(request, "dashboard/parametres.html", {"form": form})

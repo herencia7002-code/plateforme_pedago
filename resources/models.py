@@ -9,6 +9,7 @@ class Document(models.Model):
     TYPE_RESSOURCE_CHOICES = [
     ("cours", "Cours"),
     ("exercices", "Exercices"),
+    ("anales", "Anales"),
     ("fiche_pedagogique", "Fiche pédagogique"),
 ]
     title = models.CharField(max_length=255)

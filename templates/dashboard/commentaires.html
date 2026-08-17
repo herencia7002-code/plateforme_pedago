@@ -44,7 +44,7 @@ Gestion des commentaires
                 <tbody>
                 {% for commentaire in derniers_commentaires %}
                     <tr>
-                        <td> <i class="bi bi-person-circle"></i> {{ commentaire.user.username }}</td>
+                        <td> <i class="bi bi-person-circle"></i> {{ commentaire.user.username }} </td>
                         <td><span> {{ commentaire.document.title }}</span></td>
                         <td> {{ commentaire.content|truncatechars:60 }}</td>
                         <td> {{ commentaire.created_at|date:"d/m/Y H:i" }}</td>
@@ -64,8 +64,6 @@ Gestion des commentaires
         </div>
     </div>
 </div>
-
-<!-- Actions rapides -->
 
 <div class="card shadow-sm border-0 rounded-4 mt-4">
     <div class="card-header bg-white">
