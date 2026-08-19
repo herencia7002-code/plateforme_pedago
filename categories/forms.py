@@ -6,16 +6,10 @@ class MatiereForm(forms.ModelForm):
     class Meta:
         model = Matiere
         fields = "__all__"
+        widgets = {"nom": forms.TextInput( attrs={"class": "form-control", "placeholder": "Nom de la matière" }),}
 
 class NiveauForm(forms.ModelForm):
     class Meta:
         model = Niveau
         fields = "__all__"
-        widgets = {
-            "nom": forms.TextInput(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": "Nom du niveau"
-                }
-            ),
-        }
+        widgets = {"nom": forms.TextInput( attrs={"class": "form-control", "placeholder": "Nom du niveau" }),}

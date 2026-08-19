@@ -15,6 +15,7 @@ from settings_app.forms import PlatformSettingsForm
 from accounts.models import User
 from resources.models import Document, Comment, calculate_file_hash
 from categories.models import Matiere, Niveau
+from settings_app.models import PlatformSettings
 from django.db.models import Q
 
 @staff_member_required
@@ -183,6 +184,12 @@ def document_create(request):
         )
         if form.is_valid():
             document = form.save(commit=False)
+            document.auteur = request.user
+            settings = PlatformSettings.get_solo()
+            if settings.validation_documents:
+                document.status = "pending"
+            else:
+                document.status = "approved"
             if document.file:
                 hash_fichier = calculate_file_hash(document.file)
                 doublon = Document.objects.filter(file_hash=hash_fichier).exists()

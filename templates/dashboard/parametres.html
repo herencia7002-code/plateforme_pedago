@@ -11,102 +11,43 @@ Paramètres de la plateforme
 {% block content %}
 
 <div class="container-fluid">
-
     {% if messages %}
         {% for message in messages %}
-
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-4"
-                 role="alert">
-
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-4"role="alert">
                 {{ message }}
-
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="alert">
-                </button>
-
+                <button type="button"class="btn-close" data-bs-dismiss="alert"></button>
             </div>
 
         {% endfor %}
     {% endif %}
-
-
-    <!-- EN-TÊTE -->
     <div class="card border-0 shadow-sm rounded-4 mb-4">
-
         <div class="card-body">
-
             <h3 class="fw-bold mb-2">
-
-                <i class="bi bi-gear-fill text-primary"></i>
-                Paramètres généraux
-
-            </h3>
-
-            <p class="text-muted mb-0">
-                Configurez les principaux paramètres de la plateforme pédagogique.
-            </p>
-
+                <i class="bi bi-gear-fill text-primary"></i>Paramètres généraux</h3>
+            <p class="text-muted mb-0"> Configurez les principaux paramètres de la plateforme pédagogique.</p>
         </div>
-
     </div>
-
-
-    <!-- FORMULAIRE UNIQUE -->
     <form method="post">
-
         {% csrf_token %}
-
-
         <div class="row g-4">
-
-
-            <!-- INFORMATIONS GÉNÉRALES -->
             <div class="col-lg-6">
-
                 <div class="card shadow-sm border-0 rounded-4 h-100">
-
                     <div class="card-header bg-primary text-white">
-
-                        <h5 class="mb-0">
-
-                            <i class="bi bi-building"></i>
-                            Informations générales
-
-                        </h5>
-
+                        <h5 class="mb-0"> <i class="bi bi-building"></i>Informations générales</h5>
                     </div>
-
-
                     <div class="card-body">
-
-                        <!-- NOM -->
-                        <div class="mb-3">
-
-                            <label class="form-label">
-                                Nom de la plateforme
-                            </label>
-
+                   <div class="mb-3">
+                            <label class="form-label"> Nom de la plateforme </label>
                             {{ form.nom_plateforme }}
-
                             {% if form.nom_plateforme.errors %}
                                 <div class="text-danger small mt-1">
                                     {{ form.nom_plateforme.errors }}
                                 </div>
                             {% endif %}
-
                         </div>
-
-
-                        <!-- EMAIL -->
                         <div class="mb-3">
-
-                            <label class="form-label">
-                                Adresse email
-                            </label>
-
+                            <label class="form-label"> Adresse email</label>
                             {{ form.email }}
-
                             {% if form.email.errors %}
                                 <div class="text-danger small mt-1">
                                     {{ form.email.errors }}
@@ -114,97 +55,40 @@ Paramètres de la plateforme
                             {% endif %}
 
                         </div>
-
-
-                        <!-- TELEPHONE -->
                         <div class="mb-3">
-
-                            <label class="form-label">
-                                Téléphone
-                            </label>
-
+                            <label class="form-label"> Téléphone </label>
                             {{ form.telephone }}
-
                             {% if form.telephone.errors %}
                                 <div class="text-danger small mt-1">
                                     {{ form.telephone.errors }}
                                 </div>
                             {% endif %}
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
-
-            <!-- CONFIGURATION -->
             <div class="col-lg-6">
-
                 <div class="card shadow-sm border-0 rounded-4 h-100">
-
                     <div class="card-header bg-success text-white">
-
-                        <h5 class="mb-0">
-
-                            <i class="bi bi-sliders"></i>
-                            Configuration
-
-                        </h5>
-
+                        <h5 class="mb-0"><i class="bi bi-sliders"></i>Configuration</h5>
                     </div>
-
-
                     <div class="card-body">
-
-
-                        <!-- INSCRIPTIONS -->
                         <div class="form-check form-switch mb-3">
-
                             {{ form.autoriser_inscriptions }}
-
-                            <label class="form-check-label">
-                                Autoriser les inscriptions
-                            </label>
-
+                            <label class="form-check-label"> Autoriser les inscriptions</label>
                         </div>
-
-
-                        <!-- VALIDATION -->
                         <div class="form-check form-switch mb-3">
-
                             {{ form.validation_documents }}
-
-                            <label class="form-check-label">
-                                Validation des documents avant publication
-                            </label>
-
+                            <label class="form-check-label"> Validation des documents avant publication</label>
                         </div>
-
-
-                        <!-- COMMENTAIRES -->
                         <div class="form-check form-switch mb-3">
-
                             {{ form.autoriser_commentaires }}
-
-                            <label class="form-check-label">
-                                Autoriser les commentaires
-                            </label>
-
+                            <label class="form-check-label">Autoriser les commentaires</label>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
-
-        <!-- SÉCURITÉ -->
         <div class="row mt-4 g-4">
 
             <div class="col-lg-6">
@@ -212,51 +96,18 @@ Paramètres de la plateforme
                 <div class="card shadow-sm border-0 rounded-4">
 
                     <div class="card-header bg-danger text-white">
-
-                        <h5 class="mb-0">
-
-                            <i class="bi bi-shield-lock"></i>
-                            Sécurité
-
-                        </h5>
-
+                        <h5 class="mb-0"> <i class="bi bi-shield-lock"></i>Sécurité</h5>
                     </div>
-
-
                     <div class="card-body">
-
-                        <a href="{% url 'password_change' %}"
-                           class="btn btn-outline-danger mb-3 w-100">
-
-                            Modifier le mot de passe administrateur
-
-                        </a>
-
+                        <a href="{% url 'password_change' %}" class="btn btn-outline-danger mb-3 w-100"> Modifier le mot de passe administrateur </a>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
-
-        <!-- BOUTON ENREGISTRER -->
         <div class="mt-4 text-end">
-
-            <button type="submit"
-                    class="btn btn-primary btn-lg">
-
-                <i class="bi bi-check-circle"></i>
-                Enregistrer les modifications
-
-            </button>
-
+            <button type="submit"  class="btn btn-primary btn-lg"> <i class="bi bi-check-circle"></i> Enregistrer les modifications</button>
         </div>
-
-
     </form>
-
 </div>
 
 {% endblock %}

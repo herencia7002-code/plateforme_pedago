@@ -16,7 +16,9 @@
         <nav class="site-nav">
             <a href="/">Accueil</a>
             <a href="{% url 'connexion' %}">Connexion</a>
+            {% if platform_settings.autoriser_inscriptions %}
             <a href="{% url 'inscription' %}">Inscription</a>
+            {% endif %}
         </nav>
     </header>
 

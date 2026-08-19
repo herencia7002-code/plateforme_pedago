@@ -2,17 +2,44 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import FileResponse
+from django.db.models import Q
+
 import hashlib
 from settings_app.models import PlatformSettings
 from .forms import DocumentForm, CommentForm
 from .models import Document,  calculate_file_hash
 from categories.models import Matiere, Niveau
+from settings_app.models import PlatformSettings
 
 @login_required
-
 def document_list(request):
     documents = Document.objects.all()
-    context = {'documents': documents,'matieres': Matiere.objects.all(), 'niveaux': Niveau.objects.all(),}
+    recherche = request.GET.get('recherche', '').strip()
+    matiere = request.GET.get('matiere', '')
+    niveau = request.GET.get('niveau', '')
+    if recherche:
+        documents = documents.filter(
+            Q(title__icontains=recherche ) |
+            Q(description__icontains=recherche) |
+            Q(auteur__username__icontains=recherche) |
+            Q(auteur__first_name__icontains=recherche) |
+            Q(auteur__last_name__icontains=recherche) |
+            Q(matiere__nom__icontains=recherche) |
+            Q(niveau__nom__icontains=recherche)
+        )
+    if matiere and matiere != "all":
+        documents = documents.filter(matiere_id=matiere)
+    if niveau and niveau != "all":
+        documents = documents.filter(niveau_id=niveau)
+
+    context = {
+        'documents': documents,
+        'matieres': Matiere.objects.all(),
+        'niveaux': Niveau.objects.all(),
+        'recherche': recherche,
+        'matiere_selectionnee': matiere,
+        'niveau_selectionne': niveau,
+    }
     return render(request, 'resources/document_list.html', context)
 
 @login_required
@@ -26,6 +53,11 @@ def document_create(request):
         if form.is_valid():
             document = form.save(commit=False)
             document.auteur = request.user
+            settings = PlatformSettings.get_solo()
+            if settings.validation_documents:
+                document.status = "pending"
+            else:
+                document.status = "approved"
             if document.file:
                 hash_fichier = calculate_file_hash(document.file)
                 doublon = Document.objects.filter(file_hash=hash_fichier).exists()

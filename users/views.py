@@ -51,8 +51,7 @@ def home(request):
         .select_related("auteur", "matiere", "niveau")
         .order_by("-created_at")
     )
-    documents = Document.objects.filter(type_ressource="cours",status="approved")
-    type_filtre = request.GET.get("type")
+    type_filtre = request.GET.get("type_ressource", "").strip()
 
     if type_filtre:
         documents = documents.filter(type_ressource=type_filtre)
@@ -83,11 +82,7 @@ def home(request):
 
     matieres = Matiere.objects.all()
     niveaux = Niveau.objects.all()
-    types_ressources = [
-        "Cours",
-        "Exercices",
-        "Fiches pédagogiques"
-    ]
+    types_ressources = Document.TYPE_RESSOURCE_CHOICES
     context = {
         "documents": documents,
         "matieres": matieres,

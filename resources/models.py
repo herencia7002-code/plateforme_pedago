@@ -9,14 +9,15 @@ class Document(models.Model):
     TYPE_RESSOURCE_CHOICES = [
     ("cours", "Cours"),
     ("exercices", "Exercices"),
-    ("anales", "Anales"),
+    ("annales", "Annales"),
+    ("annales_sujet_corriges", "Annales avec sujets et corrigés"),
     ("fiche_pedagogique", "Fiche pédagogique"),
 ]
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     file = models.FileField(upload_to='documents/')
     type_ressource = models.CharField(
-    max_length=20,
+    max_length=30,
     choices=TYPE_RESSOURCE_CHOICES,
     verbose_name="Type de ressource",
                 )
@@ -49,7 +50,7 @@ class Document(models.Model):
 ]
 
     status = models.CharField(
-        max_length=20,
+        max_length=30,
         choices=STATUS_CHOICES,
         default="pending",
 )

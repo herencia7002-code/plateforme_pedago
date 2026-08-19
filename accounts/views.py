@@ -22,6 +22,7 @@ from django.views.generic import (
 
 from resources.models import Document, Comment
 from categories.models import Matiere, Niveau
+from settings_app.models import PlatformSettings
 from .forms import UserForm, UserUpdateForm, PhotoProfilForm
 from resources.forms import DocumentForm
 
@@ -133,6 +134,11 @@ def document_create(request):
         if form.is_valid():
             document = form.save(commit=False)
             document.auteur = request.user
+            settings = PlatformSettings.get_solo()
+            if settings.validation_documents:
+                document.status = "pending"
+            else:
+                document.status = "approved"
             fichier = document.file
             sha256 = hashlib.sha256()
             for chunk in fichier.chunks():

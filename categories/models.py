@@ -17,11 +17,6 @@ class Niveau(models.Model):
 class Matiere(models.Model):
     nom = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True)
-    niveau = models.ForeignKey(
-        Niveau,
-        on_delete=models.CASCADE,
-        related_name="matieres"
-    )
 
     class Meta:
         verbose_name = "Matière"

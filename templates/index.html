@@ -31,9 +31,8 @@
             <a href="#" class="sidebar-icon menu-trigger" data-menu="menu-ressources"><i class="bi bi-folder2-open"></i> <span>Ressources</span></a>
             <div id="menu-ressources" class="floating-menu">
                 <h4>Ressources</h4>
-                {% for type in types_ressources %}
-                <a href="?type={{ type }}">{{ type }}</a>
-                {% endfor %}
+                {% for valeur, libelle in types_ressources %}
+                <a href="?type_ressource={{ valeur }}"> {{ libelle }} </a>{% endfor %}
             </div>
     </aside>
     <div class="app-content">
